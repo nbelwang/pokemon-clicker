@@ -1,3 +1,5 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomeLayout from './pages/HomeLayout'
 import Start from './pages/Start'
@@ -6,6 +8,7 @@ import Level from './pages/Level'
 import Shop from './pages/Shop'
 import Pokedex from './pages/Pokedex'
 import Stats from './pages/Stats'
+import './index.css'
 
 const router = createBrowserRouter([
   { path: '/', element: <Start /> },
@@ -22,6 +25,8 @@ const router = createBrowserRouter([
   }
 ])
 
-export default function App() {
-  return <RouterProvider router={router} />
-}
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
+)

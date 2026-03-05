@@ -1,0 +1,22 @@
+const KEY = 'pokemonClicker'
+
+const DEFAULT_STATE = {
+  pokemon: [],
+  xp: 0,
+  itemMultiplier: 1,
+  levelsUnlocked: [1],
+  stats: {
+    pokemonCaught: 0,
+    totalDamageDealt: 0,
+    // TODO: add more stats
+  }
+}
+
+export function loadData() {
+    const raw = sessionStorage.getItem(KEY)
+    return raw ? JSON.parse(raw) : DEFAULT_STATE
+  }
+  
+  export function saveData(data) {
+    sessionStorage.setItem(KEY, JSON.stringify(data))
+  }
