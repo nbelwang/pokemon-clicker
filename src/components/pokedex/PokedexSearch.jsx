@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
-export default function PokedexSearch() {
+import PokedexCard from './PokedexCard'
+
+export default function PokedexSearch({ onSelect, className = '' }) {
   const { playerData } = useOutletContext()
   const [query, setQuery] = useState('')
   const [pokemon, setPokemon] = useState(null)
@@ -23,8 +25,7 @@ export default function PokedexSearch() {
   const isCaught = pokemon && playerData.pokemon.includes(pokemon.id)
 
   return (
-    <div className="p-6 w-full h-full">
-      <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
+    <div className={`p-6 w-full h-full ${className}`}>      <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
 
       <div className="flex gap-2 mb-6">
         <input
@@ -45,30 +46,15 @@ export default function PokedexSearch() {
       {error && <p className="text-salmon font-quantico mb-4">{error}</p>}
 
       {pokemon && (
-        <div className="bg-white border border-powder-blue rounded-xl p-6 w-72 shadow">
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="font-press-start text-sm text-dark-gray uppercase">{pokemon.name}</h2>
-            <span className={`font-quantico text-sm font-bold ${isCaught ? 'text-green' : 'text-salmon'}`}>
-              {isCaught ? 'Caught' : 'Not Caught'}
-            </span>
-          </div>
-          <img
-            src={pokemon.sprites.front_default}
-            alt={pokemon.name}
-            className="w-28 h-28 mx-auto"
-          />
-          <div className="mt-2 font-quantico text-sm flex flex-col gap-1">
-            <p>
-              <span className="font-bold">Type: </span>
-              {pokemon.types.map(t => (
-                <span key={t.type.name} className="bg-slate-blue text-dark-gray px-2 py-0.5 rounded mr-1 text-xs">
-                  {t.type.name}
-                </span>
-              ))}
-            </p>
-            <p><span className="font-bold">HP:</span> {pokemon.stats[0].base_stat}</p>
-          </div>
-        </div>
+        // Pokemon Mini Card Display
+        <PokedexCard
+          name = {pokemon.name}
+          frontSprite = {pokemon.sprites.front_default}
+          types = {pokemon.types}
+          stats = {pokemon.stats}
+          isCaught = {isCaught}
+          onClick={() => onSelect && onSelect(pokemon)}
+        />
       )}
     </div>
   )
