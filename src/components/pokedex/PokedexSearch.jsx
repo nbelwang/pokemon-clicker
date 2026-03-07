@@ -23,7 +23,7 @@ export default function PokedexSearch() {
   const isCaught = pokemon && playerData.pokemon.includes(pokemon.id)
 
   return (
-    <div className="p-6">
+    <div className="p-6 w-full h-full">
       <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
 
       <div className="flex gap-2 mb-6">
@@ -32,7 +32,7 @@ export default function PokedexSearch() {
           onChange={e => setQuery(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && searchPokemon()}
           placeholder="Search Pokemon..."
-          className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-64 focus:outline-none focus:border-royal-blue"
+          className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-64 focus:outline-none focus:border-royal-blue w-full"
         />
         <button
           onClick={searchPokemon}
