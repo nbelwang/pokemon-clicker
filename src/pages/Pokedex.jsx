@@ -1,8 +1,8 @@
-import PokedexSearch from '../components/PokedexSearch'
+import PokedexSearch from '../components/pokedex/PokedexSearch'
 
 export default function Pokedex() {
   return (
-    <div>
+    <div className="flex">
       <PokedexSearch />
     </div>
   )
