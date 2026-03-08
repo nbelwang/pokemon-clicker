@@ -1,22 +1,24 @@
 import { Link } from 'react-router-dom'
+import bgImage from '../assets/background.png'
+import titleImage from '../assets/title.png'
 
 export default function Start() {
   return (
-    <div className="min-h-screen bg-cream flex flex-col items-center justify-center gap-8">
-      <h1 className="font-press-start text-4xl text-royal-blue drop-shadow-md">
-        Pokémon Clicker
-      </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-3 bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgImage})` }}>
 
-      <div className="flex flex-col gap-4 w-48">
+      <img src={titleImage} alt="title text" className="w-full h-auto" />
+
+      <div className="flex flex-col gap-4 w-48 mb-35">
         <Link
           to="/home"
-          className="bg-yellow font-press-start text-dark-gray text-sm text-center py-3 px-6 rounded-lg shadow hover:brightness-95"
+          className="bg-yellow border-4 border-royal-blue font-press-start text-dark-gray text-center py-3 px-6 rounded-lg shadow hover:brightness-95"
         >
           PLAY
         </Link>
         <Link
           to="/home/stats"
-          className="bg-powder-blue font-press-start text-dark-gray text-sm text-center py-3 px-6 rounded-lg shadow hover:brightness-95"
+          className="bg-powder-blue border-4 border-royal-blue font-press-start text-dark-gray text-center py-3 px-6 rounded-lg shadow hover:brightness-95"
         >
           STATS
         </Link>
