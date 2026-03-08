@@ -1,9 +1,23 @@
 import { useOutletContext } from 'react-router-dom'
+import { useQueries } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
+import { fetchLevelPokemon } from '../utils/api'
 
 export default function Levels() {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
+
+  const pokemonQueries = useQueries({
+    queries: playerData.pokemon.map((id) => ({
+      queryKey: ['pokemon', id],
+      queryFn: () => fetchLevelPokemon(id),
+      staleTime: Infinity
+    }))
+  })
+
+  const pokemon = pokemonQueries
+    .map(q => q.data)
+    .filter(Boolean)
 
   function handleClick() {
     updateData({
@@ -21,6 +35,20 @@ export default function Levels() {
         onClick={handleClick}>
         increase xp
       </button>
+
+      <div className="space-y-4">
+        {pokemon.map((p) => (
+          <div key={p.id} className="border p-3">
+            <img src={p.sprite} alt={p.name} />
+            <p>ID: {p.id}</p>
+            <p>Name: {p.name}</p>
+            <p>HP: {p.totalHP}</p>
+            <p>Attack: {p.attack}</p>
+            <p>Type: {p.type}</p>
+          </div>
+        ))}
+      </div>
+      
     </div>
     
   )
