@@ -1,9 +1,15 @@
 import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import LevelLayout from '../components/level/LevelLayout'
 
 export default function Levels() {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
+  const caughtPokemon = []
+  const wildPokemon = []
+  const timer = 0
+
+  
 
   function handleClick() {
     updateData({
@@ -21,6 +27,9 @@ export default function Levels() {
         onClick={handleClick}>
         increase xp
       </button>
+
+      <LevelLayout />
+
     </div>
     
   )
