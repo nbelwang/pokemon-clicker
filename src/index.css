@@ -2,9 +2,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-quantico: 'Quantico', sans-serif;
-  --font-silkscreen: 'Silkscreen', sans-serif;
-  --font-press-start: 'Press Start 2P', sans-serif;
+  --font-quantico: 'Quantico', sans-serif; /* normal text */
+  --font-silkscreen: 'Silkscreen', sans-serif; /* pixel looking font */
+  --font-press-start: 'Press Start 2P', sans-serif; /* this is only for the start screen text */
 
   --color-slate-blue: #b2ced3;
   --color-mint-white: #f0faf9;
