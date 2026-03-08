@@ -25,8 +25,8 @@ export default function PokedexSearch({ onSelect, className = '' }) {
   const isCaught = pokemon && playerData.pokemon.includes(pokemon.id)
 
   return (
-    <div className={`p-6 w-full h-full ${className}`}>      <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
-
+    <div className={`p-6 w-full h-full ${className}`}>      
+      <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
       <div className="flex gap-2 mb-6">
         <input
           value={query}
