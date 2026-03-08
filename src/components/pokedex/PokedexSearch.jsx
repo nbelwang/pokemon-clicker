@@ -33,7 +33,7 @@ export default function PokedexSearch({ onSelect, className = '' }) {
           onChange={e => setQuery(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && searchPokemon()}
           placeholder="Search Pokemon..."
-          className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-64 focus:outline-none focus:border-royal-blue w-full"
+          className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-full focus:outline-none focus:border-royal-blue "
         />
         <button
           onClick={searchPokemon}

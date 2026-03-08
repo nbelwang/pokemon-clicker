@@ -51,7 +51,7 @@ export default function PokedexDetail({ pokemon, className = '' }) {
 
     if (!pokemon) {
         return (
-            <div className={`mt-6 w-full h-full border-[3px] border-royal-blue rounded-[2rem] bg-white flex flex-col items-center justify-center p-8 ${className}`}>
+            <div className={`mt-6 w-full h-full border-[3px] border-royal-blue rounded-4xl bg-white flex flex-col items-center justify-center p-8 ${className}`}>
                 <p className="text-gray-500 font-quantico text-xl">No Pokemon selected</p>
             </div>
         )
@@ -79,10 +79,10 @@ export default function PokedexDetail({ pokemon, className = '' }) {
     };
 
     return(
-        <div className={`w-full h-full bg-white border-[3px] border-royal-blue rounded-[2rem] p-8 lg:p-10 flex flex-col overflow-auto ${className}`}>
+        <div className={`w-full h-full bg-white border-[3px] border-royal-blue rounded-4xl p-8 lg:p-10 flex flex-col overflow-auto ${className}`}>
             {/* Top section with image/description */}
             <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mb-10 items-center lg:items-start">
-                <div className="bg-[#f0f0f0] rounded-[2rem] w-48 h-48 md:w-56 md:h-56 flex items-center justify-center flex-shrink-0">
+                <div className="bg-[#f0f0f0] rounded-4xl w-48 h-48 md:w-56 md:h-56 flex items-center justify-center shrink-0">
                     <img
                         src={pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default}
                         alt={pokemon.name}
@@ -107,7 +107,7 @@ export default function PokedexDetail({ pokemon, className = '' }) {
             {/* hp/type/weaknesses */}
             <div className="flex flex-col gap-6 mb-10 font-quantico text-[1.1rem]">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-12 md:gap-20">
-                    <div className="flex items-center min-w-[160px]">
+                    <div className="flex items-center min-w-40">
                         <span className="font-bold text-black mr-2">Base HP :</span>
                         <span className="font-bold text-black">{hp}</span>
                     </div>
@@ -124,7 +124,7 @@ export default function PokedexDetail({ pokemon, className = '' }) {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-12 md:gap-20">
-                    <div className="flex items-center min-w-[160px]">
+                    <div className="flex items-center min-w-40">
                         <span className="font-bold text-black">Weaknesses</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6">
@@ -143,7 +143,7 @@ export default function PokedexDetail({ pokemon, className = '' }) {
             </div>
 
             {/* 2 x 2 box of stats */}
-            <div className="bg-[#f0f0f0] rounded-[2rem] p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 gap-6 font-quantico text-[1.1rem] text-black">
+            <div className="bg-[#f0f0f0] rounded-4xl p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 gap-6 font-quantico text-[1.1rem] text-black">
                 <div className="flex flex-col gap-6">
                     <p><span className="font-bold mr-4">Height:</span> {feet}' {inches}"</p>
                     <p><span className="font-bold mr-4">Weight:</span> {weightInLbs} lbs</p>
