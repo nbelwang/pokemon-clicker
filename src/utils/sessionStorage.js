@@ -9,7 +9,8 @@ const DEFAULT_STATE = {
     pokemonCaught: 0,
     totalDamageDealt: 0,
     // TODO: add more stats
-  }
+  }, 
+  wildPokemon: []
 }
 
 const TEST_STATE = {
@@ -21,7 +22,8 @@ const TEST_STATE = {
     pokemonCaught: 0,
     totalDamageDealt: 0,
     // TODO: add more stats
-  }
+  },
+  wildPokemon: []
 }
 
 export function loadData() {

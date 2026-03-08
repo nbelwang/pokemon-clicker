@@ -1,13 +1,30 @@
 import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 
-export default function Inventory() {
+export default function Inventory({ caughtPokemon, typeMap}) {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
 
   return (
-    <div className="p-6">
+    <div className="">
       <h1 className="font-quantico">inventory</h1>
+
+      <div className="space-y-4">
+        {caughtPokemon.map((p) => (
+          <div key={p.id} className="border p-3">
+            <img src={p.sprite} alt={p.name} />
+            <p>ID: {p.id}</p>
+            <p>Name: {p.name}</p>
+            <p>HP: {p.totalHP}</p>
+            <p>Attack: {p.attack}</p>
+            <p>Types: {p.types.join(", ")}</p>
+            <p>
+              Effective Against: {[...new Set(p.types.flatMap(type => typeMap[type] || []))].join(", ")}
+            </p>
+          </div>
+        ))}
+      </div>
+
     </div>
   )
 }
