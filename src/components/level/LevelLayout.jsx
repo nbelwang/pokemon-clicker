@@ -13,7 +13,7 @@ export default function LevelLayout({ pokemon, caughtPokemonIds, wildPokemonIds,
   return (
     <div className="flex">
 
-      <div className="w-1/3 p-5 bg-slate-blue">
+      <div className="w-1/3 p-4 bg-slate-blue">
         <Inventory 
           caughtPokemon={caughtPokemon}
           typeMap={typeMap}
@@ -23,12 +23,17 @@ export default function LevelLayout({ pokemon, caughtPokemonIds, wildPokemonIds,
       <div className="flex-1">
         <div className="bg-dark-gray p-3">
           <h1 className="font-quantico font-bold text-xl text-white pl-1">LEVEL {levelNumber}</h1>
+          {/* timer */}
         </div>
 
         <BattleLayout 
           wildPokemon={wildPokemon}
           typeMap={typeMap}
         />
+
+        {/* multiplier */}
+        {/* xp */}
+
       </div>
       
       

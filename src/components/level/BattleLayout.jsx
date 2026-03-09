@@ -7,7 +7,6 @@ export default function BattleLayout({ wildPokemon, typeMap }) {
 
   return (
     <div className="">
-      <h1 className="font-quantico">battle layout</h1>
 
       <div className="space-y-4">
         {wildPokemon.map((p) => (

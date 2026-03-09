@@ -7,7 +7,7 @@ export default function Inventory({ caughtPokemon, typeMap}) {
 
   return (
     <div className="">
-      <h1 className="font-quantico">inventory</h1>
+      <h1 className="font-quantico font-bold text-xl mb-2 text-royal-blue">My Pokémon</h1>
 
       <div className="space-y-4">
         {caughtPokemon.map((p) => (
