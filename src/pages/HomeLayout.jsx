@@ -1,7 +1,15 @@
 import { useOutletContext, NavLink, Link} from 'react-router-dom'
+import { useEffect } from 'react'
 
 export default function HomeLayout() {
-  const { playerData } = useOutletContext()
+  const { playerData, updateData } = useOutletContext()
+
+  // clear wildPokemon array if player returns to home page
+  useEffect(() => {
+    if (playerData.wildPokemon?.length) {
+      updateData({ wildPokemon: [] })
+    }
+  }, [])
 
   return (
     <div className="min-h-screen p-40">
@@ -9,8 +17,6 @@ export default function HomeLayout() {
         Select Level
       </h1>
       <p className="font-quantico text-dark-gray mb-6">Collect pokémon and advance through the levels to beat the final boss!</p>
-
-      <p className="font-quantico text-dark-gray mb-6">XP: {playerData.xp}</p> 
 
       <div className="flex gap-4 flex-wrap mb-10">
         {Array.from({ length: 5 }, (_, i) => i + 1).map(level => {

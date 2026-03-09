@@ -17,7 +17,7 @@ export default function Root() {
   return (
     <div className="min-h-screen bg-mint-white">
 
-      <nav className="bg-royal-blue text-white flex items-center justify-between px-6 py-7">
+      <nav className="bg-royal-blue text-white flex items-center justify-between px-6 py-6">
         <NavLink
           to={onHome ? "/" : "/home"}
           className="font-press-start text-sm hover:text-yellow"
