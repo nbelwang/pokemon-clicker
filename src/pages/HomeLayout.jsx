@@ -27,7 +27,7 @@ export default function HomeLayout() {
               <Link
                 key={level}
                 to={`/home/level/${level}`}
-                className={`w-16 h-16 flex items-center justify-center rounded-lg shadow font-silkscreen bg-yellow`}
+                className={`w-16 h-16 flex items-center justify-center rounded-lg shadow font-silkscreen bg-yellow border-2 border-royal-blue`}
               >
                 {level}
               </Link>
@@ -46,15 +46,15 @@ export default function HomeLayout() {
       </div>
 
       <div className="flex gap-6 font-quantico text-lg">
-        <NavLink to="/home/pokedex" className="hover:text-royal-blue">
+        <NavLink to="/home/pokedex" className="font-silkscreen text-royal-blue mb-4 hover:text-black bg-powder-blue border-2 border-royal-blue px-6 py-3 rounded-lg">
           Pokédex
         </NavLink>
         
-        <NavLink to="/home/shop" className="hover:text-royal-blue">
+        <NavLink to="/home/shop" className="font-silkscreen text-royal-blue mb-4 hover:text-black bg-powder-blue border-2 border-royal-blue px-6 py-3 rounded-lg">
           Shop
         </NavLink>
 
-        <NavLink to="/home/stats" className="hover:text-royal-blue">
+        <NavLink to="/home/stats" className="font-silkscreen text-royal-blue mb-4 hover:text-black bg-powder-blue border-2 border-royal-blue px-6 py-3 rounded-lg">
           Stats
         </NavLink>
       </div>
