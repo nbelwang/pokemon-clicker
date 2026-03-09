@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom'
 export default function PokedexCard(props) {
   return (
     <div
-      className={`bg-white border border-powder-blue rounded-xl p-6 w-72 shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg' : ''}`}
+      className={`bg-white border border-powder-blue rounded-xl p-6 w-72 shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
       onClick={props.onClick}
     >
         <div className="flex items-center justify-between mb-2">

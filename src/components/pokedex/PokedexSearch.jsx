@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 import PokedexCard from './PokedexCard'
@@ -6,56 +6,74 @@ import PokedexCard from './PokedexCard'
 export default function PokedexSearch({ onSelect, className = '' }) {
   const { playerData } = useOutletContext()
   const [query, setQuery] = useState('')
-  const [pokemon, setPokemon] = useState(null)
+  const [inventoryPokemon, setInventoryPokemon] = useState([])
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  async function searchPokemon() {
-    setError('')
-    setPokemon(null)
-    try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${query.toLowerCase()}`)
-      if (!res.ok) throw new Error()
-      const data = await res.json()
-      setPokemon(data)
-    } catch {
-      setError('Pokemon not found')
-    }
-  }
+  useEffect(() => {
+    async function fetchInventory() {
+      if (!playerData?.pokemon?.length) {
+        setInventoryPokemon([])
+        return
+      }
 
-  const isCaught = pokemon && playerData.pokemon.includes(pokemon.id)
+      setLoading(true)
+      try {
+        const promises = playerData.pokemon.map(id =>
+          fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then(res => res.json())
+        )
+        const data = await Promise.all(promises)
+        setInventoryPokemon(data)
+      } catch (err) {
+        console.error(err)
+        setError('Failed to fetch Pokemon data')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchInventory()
+  }, [playerData?.pokemon])
+
+  const filteredPokemon = inventoryPokemon.filter(p =>
+    p.name.toLowerCase().includes(query.toLowerCase())
+  )
 
   return (
-    <div className={`p-6 w-full h-full ${className}`}>      
+    <div className={`p-6 w-full h-full flex flex-col ${className}`}>      
       <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 mb-6 shrink-0">
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && searchPokemon()}
-          placeholder="Search Pokemon..."
+          placeholder="Search caught Pokemon..."
           className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-full focus:outline-none focus:border-royal-blue "
         />
-        <button
-          onClick={searchPokemon}
-          className="bg-royal-blue text-white font-quantico px-4 py-2 rounded hover:brightness-110"
-        >
-          Search
-        </button>
       </div>
 
       {error && <p className="text-salmon font-quantico mb-4">{error}</p>}
-
-      {pokemon && (
-        // Pokemon Mini Card Display
-        <PokedexCard
-          name = {pokemon.name}
-          frontSprite = {pokemon.sprites.front_default}
-          types = {pokemon.types}
-          stats = {pokemon.stats}
-          isCaught = {isCaught}
-          onClick={() => onSelect && onSelect(pokemon)}
-        />
+      {loading && <p className="text-royal-blue font-quantico mb-4">Loading pokedex...</p>}
+      {/* If there is no pokemon in the player's inventory */}
+      {!loading && inventoryPokemon.length === 0 && (
+        <p className="text-gray-500 font-quantico mb-4">No Pokemon caught yet!</p>
       )}
+
+      <div className="flex flex-row flex-wrap gap-4 overflow-y-auto min-h-0 flex-1 justify-center content-start">
+        {filteredPokemon.map(p => (
+          <PokedexCard
+            key={p.id}
+            name={p.name}
+            frontSprite={p.sprites.front_default}
+            types={p.types}
+            stats={p.stats}
+            isCaught={true}
+            onClick={() => onSelect && onSelect(p)}
+          />
+        ))}
+        {!loading && inventoryPokemon.length > 0 && filteredPokemon.length === 0 && query && (
+          <p className="text-salmon font-quantico mb-4">No caught Pokemon found matching "{query}"</p>
+        )}
+      </div>
     </div>
   )
 }
