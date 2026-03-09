@@ -17,7 +17,7 @@ const TEST_STATE = {
   pokemon: [1, 4, 26, 69, 204],
   xp: 0,
   itemMultiplier: 1,
-  levelsUnlocked: 2,
+  levelsUnlocked: 4,
   stats: {
     pokemonCaught: 0,
     totalDamageDealt: 0,

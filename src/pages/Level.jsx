@@ -20,7 +20,7 @@ export default function Levels() {
   const numWild = wildPokemonPerLevel[levelNumber] || 0
   const allLevelPokemon = pokemonLevels[`level${levelNumber}`] || []
 
-  // if wildPokemon is empty, grabs numWild amount of ids from allLevelPokemon only once
+  // if wildPokemon is empty, grabs numWild pokemon from allLevelPokemon ONLY ONCE
   const wildPokemon = useMemo(() => {
     if (playerData.wildPokemon?.length) return playerData.wildPokemon
 
@@ -69,7 +69,7 @@ export default function Levels() {
       <LevelLayout 
         pokemon={pokemon}
         caughtPokemonIds={playerData.pokemon}
-        wildPokemonIds={wildPokemon}
+        wildPokemonIds={playerData.wildPokemon}
         typeMap={typeMap}
       />
       
