@@ -7,7 +7,7 @@ export async function fetchLevelPokemon(id) {
     return {
         id: data.id,
         name: data.name,
-        totalHP: data.stats.find(s => s.stat.name === "hp").base_stat,
+        hp: data.stats.find(s => s.stat.name === "hp").base_stat,
         attack: data.stats.find(s => s.stat.name === "attack").base_stat,
         sprite: data.sprites.other?.['official-artwork']?.front_default,
         types: data.types.map(t => t.type.name)

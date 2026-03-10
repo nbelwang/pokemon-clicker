@@ -1,15 +1,7 @@
 import { useOutletContext, NavLink, Link} from 'react-router-dom'
-import { useEffect } from 'react'
 
 export default function HomeLayout() {
-  const { playerData, updateData } = useOutletContext()
-
-  // clear wildPokemon array if player returns to home page
-  useEffect(() => {
-    if (playerData.wildPokemon?.length) {
-      updateData({ wildPokemon: [] })
-    }
-  }, [])
+  const { playerData } = useOutletContext()
 
   return (
     <div className="min-h-screen p-40">

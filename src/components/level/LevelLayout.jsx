@@ -1,14 +1,49 @@
 import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import Inventory from './Inventory'
 import BattleLayout from './BattleLayout'
 
-export default function LevelLayout({ pokemon, caughtPokemonIds, wildPokemonIds, typeMap, timer, multiplier}) {
+export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer, multiplier}) {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
+  
+  const [wildIndex, setWildIndex] = useState(0)
+  const [wildHp, setWildHp] = useState([])
 
-  const caughtPokemon = pokemon.filter(p => caughtPokemonIds.includes(p.id))
-  const wildPokemon = pokemon.filter(p => wildPokemonIds.includes(p.id))
+  useEffect(() => {
+    if (!wildPokemon.length) return
+
+    const initialHp = Object.fromEntries(
+      wildPokemon.map(p => [p.id, p.hp])
+    )
+    setWildHp(initialHp)
+  }, [wildPokemon])
+
+  const currentWildPokemon = wildPokemon[wildIndex]
+
+  function attackWildPokemon() {
+    if (!currentWildPokemon) return
+
+    setWildHp(prev => {
+      const newHp = (prev[currentWildPokemon.id] ?? 0) - 20
+
+      const updated = {
+        ...prev,
+        [currentWildPokemon.id]: newHp
+      }
+
+      if (newHp <= 0) {
+        let nextIndex = wildIndex + 1
+        while (nextIndex < wildPokemon.length && (updated[wildPokemon[nextIndex].id] ?? 0) <= 0) {
+          nextIndex++
+        }
+        setWildIndex(nextIndex)
+      }
+      console.log(updated)
+      return updated
+    })
+  }
 
   return (
     <div className="flex">
@@ -27,8 +62,9 @@ export default function LevelLayout({ pokemon, caughtPokemonIds, wildPokemonIds,
         </div>
 
         <BattleLayout 
-          wildPokemon={wildPokemon}
-          typeMap={typeMap}
+          pokemon={currentWildPokemon}
+          hp={wildHp[currentWildPokemon?.id]}
+          attack={attackWildPokemon}
         />
 
         {/* multiplier */}

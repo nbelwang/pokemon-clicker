@@ -13,7 +13,7 @@ export default function Inventory({ caughtPokemon, typeMap}) {
             <img src={p.sprite} alt={p.name} />
             <p>ID: {p.id}</p>
             <p>Name: {p.name}</p>
-            <p>HP: {p.totalHP}</p>
+            <p>HP: {p.hp}</p>
             <p>Attack: {p.attack}</p>
             <p>Types: {p.types.join(", ")}</p>
             <p>

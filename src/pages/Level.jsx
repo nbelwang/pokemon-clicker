@@ -1,12 +1,12 @@
 import { useOutletContext } from 'react-router-dom'
 import { useQueries } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { useMemo } from 'react'
+import { useState } from 'react'
 import LevelLayout from '../components/level/LevelLayout'
 import { fetchLevelPokemon, fetchTypesEffectiveAgainst } from '../utils/api'
 import pokemonLevels from '../utils/pokemonLevels.json'
 
-export default function Levels() {
+export default function Level() {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
   
@@ -18,21 +18,15 @@ export default function Levels() {
     4: 2
   }
   const numWild = wildPokemonPerLevel[levelNumber] || 0
-  const allLevelPokemon = pokemonLevels[`level${levelNumber}`] || []
-
-  // if wildPokemon is empty, grabs numWild pokemon from allLevelPokemon ONLY ONCE
-  const wildPokemon = useMemo(() => {
-    if (playerData.wildPokemon?.length) return playerData.wildPokemon
-
-    const selected = [...allLevelPokemon].sort(() => Math.random() - 0.5).slice(0, numWild)
-
-    updateData({ wildPokemon: selected })
-
+  const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
+  
+  const wildPokemonIds = useState(() => {
+    const selected = [...allLevelPokemonIds].sort(() => Math.random() - 0.5).slice(0, numWild)
     return selected
-  }, [allLevelPokemon, numWild, playerData.wildPokemon])
-    
+  })
+  
   // fetch data for caught and wild pokemon 
-  const allPokemonIds = [...new Set([...playerData.pokemon, ...playerData.wildPokemon])]
+  const allPokemonIds = [...new Set([...playerData.pokemon, ...wildPokemonIds])]
 
   const pokemonQueries = useQueries({
     queries: allPokemonIds.map((id) => ({
@@ -43,6 +37,8 @@ export default function Levels() {
   })
 
   const pokemon = pokemonQueries.map(q => q.data).filter(Boolean)
+  const caughtPokemon = pokemon.filter(p => playerData.pokemon.includes(p.id))
+  const wildPokemon = pokemon.filter(p => wildPokemonIds.includes(p.id))
 
   // create type map to determine the types the pokemon are effective against
   const types = [...new Set(pokemon.flatMap(p => p.types))]
@@ -67,9 +63,8 @@ export default function Levels() {
     <div className="">
 
       <LevelLayout 
-        pokemon={pokemon}
-        caughtPokemonIds={playerData.pokemon}
-        wildPokemonIds={playerData.wildPokemon}
+        caughtPokemon={caughtPokemon}
+        wildPokemon={wildPokemon}
         typeMap={typeMap}
       />
       
