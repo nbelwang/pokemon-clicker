@@ -20,7 +20,7 @@ export default function Level() {
   const numWild = wildPokemonPerLevel[levelNumber] || 0
   const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
   
-  const wildPokemonIds = useState(() => {
+  const [wildPokemonIds] = useState(() => {
     const selected = [...allLevelPokemonIds].sort(() => Math.random() - 0.5).slice(0, numWild)
     return selected
   })

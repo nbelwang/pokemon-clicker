@@ -1,38 +1,41 @@
-import { useOutletContext } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
 
-export default function BattleLayout({ pokemon, hp, attack }) {
-  const { playerData, updateData } = useOutletContext()
-  const { levelNumber } = useParams()
+export default function BattleLayout({ pokemon, attack, status }) {
 
-  if (!pokemon) {
-    return <div className="p-10">Level complete</div>
+  if (status === "finished") {
+    return <div className="p-10">Level Complete</div>
   }
 
-  const maxHp = pokemon.hp
-  const hpPercent = (hp / maxHp) * 100
+  if (!pokemon) {
+    return <div className="p-10">Loading...</div>
+  }
+
+  const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
 
   return (
-    <div className="flex flex-col items-center gap-6 p-10">
+    <div className="flex flex-col items-center gap-3 pt-15">
 
-      <h2 className="">{pokemon.name}</h2>
-      <p className="">{pokemon.id}</p>
-
+      {/* nametag */}
+      <div className="border-3 border-dark-gray rounded-lg p-2 bg-white">
+        <div className="flex items-end justify-between mb-1">
+          <h1 className="font-silkscreen text-2xl">{pokemon.name}</h1>
+          <p className="font-quantico mr-1">{pokemon.hp} / {pokemon.maxHp}</p>
+        </div>
+        <div className="flex items-center w-110 p-1 h-7 bg-dark-gray rounded">
+          <p className="font-quantico font-bold text-yellow pr-1">HP </p>
+          <div className="w-full rounded bg-white">
+            <div
+            className="bg-salmon rounded h-5"
+            style={{ width: `${hpPercent}%` }}
+            />
+          </div>
+        </div>
+      </div>
 
       <img
         src={pokemon.sprite}
-        className="cursor-pointer"
+        className="cursor-pointer h-110 w-110"
         onClick={attack}
       />
-
-      <div className="w-64 bg-gray-700 h-4 rounded">
-        <div
-          className="bg-green-500 h-4 rounded"
-          style={{ width: `${hpPercent}%` }}
-        />
-      </div>
-
-      <p className="">{hp} / {maxHp}</p>
 
     </div>
   )

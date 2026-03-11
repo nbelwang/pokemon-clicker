@@ -15,7 +15,7 @@ export default function Root() {
   const onHome = location.pathname === "/home"
 
   return (
-    <div className="min-h-screen bg-mint-white">
+    <div className="flex flex-col h-screen bg-mint-white">
 
       <nav className="bg-royal-blue text-white flex items-center justify-between px-6 py-6">
         <NavLink
@@ -24,10 +24,11 @@ export default function Root() {
         >
           {onHome ? "< START" : "< HOME"}
         </NavLink>
-
       </nav>
 
-      <Outlet context={{ playerData, updateData }} />
+      <div className="flex-1">
+        <Outlet context={{ playerData, updateData }} />
+      </div>
 
     </div>
   )
