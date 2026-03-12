@@ -1,27 +1,41 @@
 import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
+import ReleaseModal from './ReleaseModal'
 
 export default function PokedexCard(props) {
   const { playerData, updateData } = useOutletContext() || {}
+  const [showModal, setShowModal] = useState(false)
 
-  const handleRemove = (e) => {
+  const handleRemoveClick = (e) => {
+    e.stopPropagation()
+    setShowModal(true)
+  }
+
+  const confirmRemove = (e) => {
     e.stopPropagation()
     if (playerData && updateData && props.id) {
       updateData({ pokemon: playerData.pokemon.filter(id => id !== props.id) })
     }
+    setShowModal(false)
+  }
+
+  const cancelRemove = (e) => {
+    e.stopPropagation()
+    setShowModal(false)
   }
 
   return (
-    <div
-      className={`relative bg-white border border-powder-blue rounded-xl p-6 grow flex shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
-      onClick={props.onClick}
-    >
-        {props.isCaught && props.id && (
-          <button
-            onClick={handleRemove}
-            className="absolute top-4 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors"
-            title="Remove from inventory"
-          >
+    <>
+      <div
+        className={`relative bg-white border border-powder-blue rounded-xl p-6 grow flex shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
+        onClick={props.onClick}
+      >
+          {props.isCaught && props.id && (
+            <button
+              onClick={handleRemoveClick}
+              className="absolute top-4 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors z-10"
+              title="Remove from inventory"
+            >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
@@ -45,6 +59,15 @@ export default function PokedexCard(props) {
           </p>
           <p><span className="font-bold">HP:</span> {props.stats[0].base_stat}</p>
         </div>
-    </div>
+      </div>
+
+      {showModal && (
+        <ReleaseModal 
+          pokemonName={props.name} 
+          onConfirm={confirmRemove} 
+          onCancel={cancelRemove} 
+        />
+      )}
+    </>
   )
 }
