@@ -1,13 +1,23 @@
-
 export default function InventoryCard({pokemon, index, activeCaughtIndex, setActiveCaught}) {
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
   const isActive = index === activeCaughtIndex
+  const isAlive = pokemon.alive
+
+  function handleClick() {
+    if (!isAlive) return
+    setActiveCaught(index)
+  }
 
   return (
     <div
-      className={`border-3 rounded-lg flex p-3 gap-4 cursor-pointer 
-                  ${isActive ? "border-yellow-400 border-6 bg-cream" : "border-royal-blue bg-white"}`}
-      onClick={() => setActiveCaught(index)}
+      className={`border-3 rounded-lg flex p-3 gap-4  
+                  ${isActive
+                      ? "border-yellow-400 border-7 bg-cream cursor-pointer"
+                      : !isAlive
+                        ? "border-powder-blue bg-powder-blue cursor-not-allowed"
+                        : "border-royal-blue bg-white cursor-pointer"
+                }`}
+      onClick={handleClick}
     >
 
       <img className="h-30 w-30" src={pokemon.sprite} alt={pokemon.name} />
@@ -24,7 +34,7 @@ export default function InventoryCard({pokemon, index, activeCaughtIndex, setAct
           <p className="font-quantico font-bold text-yellow pr-1">HP </p>
           <div className="w-full rounded bg-white">
             <div
-            className="bg-light-green rounded h-5"
+            className={`rounded h-5 ${isActive? "bg-green" : "bg-light-green"}`}
             style={{ width: `${hpPercent}%` }}
             />
           </div>

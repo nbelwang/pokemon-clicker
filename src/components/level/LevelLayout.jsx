@@ -25,6 +25,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
         name: p.name,
         hp: p.hp,
         maxHp: p.hp,
+        attack: p.attack/10,
         sprite: p.sprite,
         types: p.types,
         alive: true
@@ -34,6 +35,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
         name: p.name,
         hp: p.hp,
         maxHp: p.hp,
+        attack: p.attack/10,  
         sprite: p.sprite,
         types: p.types,
         alive: true
@@ -42,19 +44,28 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       activeCaughtIndex: 0,
       status: "fighting"
     })
-  }, [wildPokemon, caughtPokemon])
+  }, [wildPokemon])
+
+  useEffect(() => {
+    if (battleState.status !== "finished") return
+
+    const caughtIds = battleState.caught.map(p => p.id)
+
+    updateData({
+      pokemon: caughtIds
+    })
+
+  }, [battleState.status])
 
   const activeWild = battleState.wild[battleState.activeWildIndex]
-  const activeCaught = battleState.caught[battleState.activeCaughtIndex]
-
-  console.log(activeWild)
-  console.log(activeCaught)
+  const encounter = `${battleState.activeWildIndex + 1}/${battleState.wild.length}`
 
   function playerAttack() {
     setBattleState(prev => {
       const next = { ...prev } // make a copy of the state to edit 
 
       const wild = [...next.wild]
+      const caught = [...next.caught]
       const target = { ...wild[next.activeWildIndex] }
 
       target.hp -= 20 //eventually apply multiplier here 
@@ -62,19 +73,22 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       if (target.hp <= 0) {
         target.hp = 0
         target.alive = false
+
+        caught.push({
+          ...target,
+          alive: false
+        })
       }
 
       wild[next.activeWildIndex] = target
       next.wild = wild
+      next.caught = caught
 
       if (!target.alive) {
         handleWildFaint(next)
       }
       return next
     })
-
-    //update playerData.pokemon if pokemon has fainted 
-
   }
 
   function handleWildFaint(state) {
@@ -96,9 +110,9 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
   }
 
   return (
-    <div className="flex flex-1 h-full">
+    <div className="flex flex-1 h-full min-h-0">
 
-      <div className="w-1/3 p-2 pt-4 pl-3 bg-slate-blue flex flex-col">
+      <div className="w-1/3 p-2 pt-4 pl-3 bg-slate-blue flex flex-col h-full min-h-0">
         <Inventory 
           caughtPokemon={battleState.caught}
           activeCaughtIndex={battleState.activeCaughtIndex}
@@ -106,16 +120,19 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
         />
       </div>
       
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col h-full">
         <div className="bg-dark-gray p-3">
           <h1 className="font-quantico font-bold text-xl text-white pl-1">LEVEL {levelNumber}</h1>
           {/* timer */}
         </div>
 
+        {/* if level 5, show the boss battle page lol */}
+
         <BattleLayout 
           pokemon={activeWild}
           attack={playerAttack}
           status={battleState.status}
+          encounter={encounter}
         />
 
         {/* multiplier */}

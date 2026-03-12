@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
 }
 
 const TEST_STATE = {
-  pokemon: [1, 4, 26, 69, 204],
+  pokemon: [1],
   xp: 0,
   itemMultiplier: 1,
   levelsUnlocked: 4,

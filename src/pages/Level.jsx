@@ -7,7 +7,7 @@ import { fetchLevelPokemon, fetchTypesEffectiveAgainst } from '../utils/api'
 import pokemonLevels from '../utils/pokemonLevels.json'
 
 export default function Level() {
-  const { playerData, updateData } = useOutletContext()
+  const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
   
   // number of encounters per level  
@@ -21,7 +21,8 @@ export default function Level() {
   const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
   
   const [wildPokemonIds] = useState(() => {
-    const selected = [...allLevelPokemonIds].sort(() => Math.random() - 0.5).slice(0, numWild)
+    const available = allLevelPokemonIds.filter(id => !playerData.pokemon.includes(id))
+    const selected = [...available].sort(() => Math.random() - 0.5).slice(0, numWild)
     return selected
   })
   
@@ -60,7 +61,7 @@ export default function Level() {
   )
 
   return (
-    <div className="">
+    <div className="flex flex-1 h-full min-h-0 overflow-hidden">
 
       <LevelLayout 
         caughtPokemon={caughtPokemon}

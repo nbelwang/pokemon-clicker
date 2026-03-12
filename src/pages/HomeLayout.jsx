@@ -10,7 +10,7 @@ export default function HomeLayout() {
   const { playerData } = useOutletContext()
 
   return (
-    <div className="min-h-screen p-40">
+    <div className="h-full p-40">
       <h1 className="font-silkscreen font-bold text-5xl text-royal-blue mb-4">
         Select Level
       </h1>

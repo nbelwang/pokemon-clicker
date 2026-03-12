@@ -1,6 +1,6 @@
 export default function Stats() {
     return (
-      <div className="min-h-screen p-40">
+      <div className="h-full p-20">
         <h1 className="font-silkscreen font-bold text-5xl text-royal-blue mb-4">
           Stats
         </h1>
