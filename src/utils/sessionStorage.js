@@ -12,21 +12,9 @@ const DEFAULT_STATE = {
   }
 }
 
-const TEST_STATE = {
-  pokemon: [1],
-  xp: 0,
-  itemMultiplier: 1,
-  levelsUnlocked: 4,
-  stats: {
-    pokemonCaught: 0,
-    totalDamageDealt: 0,
-    // TODO: add more stats
-  }
-}
-
 export function loadData() {
     const raw = sessionStorage.getItem(KEY)
-    return raw ? JSON.parse(raw) : TEST_STATE
+    return raw ? JSON.parse(raw) : DEFAULT_STATE
   }
   
   export function saveData(data) {

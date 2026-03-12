@@ -4,102 +4,91 @@ import { useState, useEffect } from 'react'
 import Inventory from './Inventory'
 import BattleLayout from './BattleLayout'
 
+const processWildState = (state) => {
+  const activeWild = state.wild[state.activeWildIndex];
+
+  if (activeWild.hp > 0) return state;
+
+  // if wild pokemon has fainted 
+  const updatedWild = [...state.wild];
+  const faintedPokemon = { ...activeWild, hp: 0, alive: false };
+  updatedWild[state.activeWildIndex] = faintedPokemon;
+
+  // add to caught list
+  const updatedCaught = [...state.caught, faintedPokemon];
+
+  const nextIndex = state.activeWildIndex + 1;
+  const isFinished = nextIndex >= state.wild.length;
+
+  return {
+    ...state,
+    wild: updatedWild,
+    caught: updatedCaught,
+    activeWildIndex: isFinished ? state.activeWildIndex : nextIndex,
+    status: isFinished ? "finished" : state.status,
+  };
+};
+
 export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer, multiplier}) {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
-  
-  const [battleState, setBattleState] = useState({
-    wild: [],
-    caught: [],
-    activeWildIndex: 0,
-    activeCaughtIndex: 0,
-    status: "idle" // idle | fighting | finished
-  })
+  const [battleState, setBattleState] = useState(null);
 
   useEffect(() => {
-    if (!wildPokemon.length || !caughtPokemon.length) return
+    // ONLY initialize if there is no state yet, and there is data
+    if (!battleState && wildPokemon.length > 0) {
+      setBattleState({
+        wild: wildPokemon.map(p => ({ ...p, 
+          hp: p.hp, 
+          maxHp: p.hp, 
+          alive: true 
+        })),
+        caught: caughtPokemon.map(p => ({ ...p, 
+          hp: p.hp, 
+          maxHp: p.hp, 
+          alive: true 
+        })),
+        activeWildIndex: 0,
+        activeCaughtIndex: 0,
+        status: "fighting"
+      });
+    }
+  }, [wildPokemon, caughtPokemon, battleState]);
 
-    setBattleState({
-      wild: wildPokemon.map(p => ({
-        id: p.id,
-        name: p.name,
-        hp: p.hp,
-        maxHp: p.hp,
-        attack: p.attack/10,
-        sprite: p.sprite,
-        types: p.types,
-        alive: true
-      })),
-      caught: caughtPokemon.map(p => ({
-        id: p.id,
-        name: p.name,
-        hp: p.hp,
-        maxHp: p.hp,
-        attack: p.attack/10,  
-        sprite: p.sprite,
-        types: p.types,
-        alive: true
-      })),
-      activeWildIndex: 0,
-      activeCaughtIndex: 0,
-      status: "fighting"
-    })
-  }, [wildPokemon])
-
+  // handles level complete
   useEffect(() => {
-    if (battleState.status !== "finished") return
+    if (battleState?.status === "finished") {
+      const caughtIds = battleState.caught.map(p => p.id);
 
-    const caughtIds = battleState.caught.map(p => p.id)
+      const nextLevelReached = Number(levelNumber) + 1;
+      const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
+      
+      updateData({ 
+        pokemon: caughtIds,
+        levelsUnlocked: newLevelsUnlocked 
+      });
+    }
+  }, [battleState?.status]);
 
-    updateData({
-      pokemon: caughtIds
-    })
-
-  }, [battleState.status])
+  if (!battleState) return <div>Loading...</div>;
 
   const activeWild = battleState.wild[battleState.activeWildIndex]
   const encounter = `${battleState.activeWildIndex + 1}/${battleState.wild.length}`
 
   function playerAttack() {
-    setBattleState(prev => {
-      const next = { ...prev } // make a copy of the state to edit 
+    if (battleState.status === "finished") return;
 
-      const wild = [...next.wild]
-      const caught = [...next.caught]
-      const target = { ...wild[next.activeWildIndex] }
+    setBattleState((prev) => {
+      const next = { ...prev };
+      const wild = [...next.wild];
+      const target = { ...wild[next.activeWildIndex] };
 
-      target.hp -= 20 //eventually apply multiplier here 
+      target.hp -= 20; // Or apply multiplier
+      wild[next.activeWildIndex] = target;
+      next.wild = wild;
 
-      if (target.hp <= 0) {
-        target.hp = 0
-        target.alive = false
-
-        caught.push({
-          ...target,
-          alive: false
-        })
-      }
-
-      wild[next.activeWildIndex] = target
-      next.wild = wild
-      next.caught = caught
-
-      if (!target.alive) {
-        handleWildFaint(next)
-      }
-      return next
-    })
-  }
-
-  function handleWildFaint(state) {
-    let nextIndex = state.activeWildIndex + 1
-
-    if (nextIndex >= state.wild.length) {
-      state.status = "finished"
-      return
-    }
-
-    state.activeWildIndex = nextIndex
+      return processWildState(next);
+    });
   }
 
   function setActiveCaught(activeCaughtIndex) {
