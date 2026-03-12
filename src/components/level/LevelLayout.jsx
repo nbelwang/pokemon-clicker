@@ -29,10 +29,11 @@ const processWildState = (state) => {
   };
 };
 
-export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer, multiplier}) {
+export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initialTime}) {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
   const [battleState, setBattleState] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(initialTime);
   const isBossLevel = levelNumber === "5";
 
   useEffect(() => {
@@ -55,6 +56,43 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       });
     }
   }, [wildPokemon, caughtPokemon, battleState]);
+
+  // run timer 
+  useEffect(() => {
+    if (!battleState || battleState.status !== "fighting") return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [battleState?.activeWildIndex, battleState?.status]);
+
+  // watch for timeout 
+  useEffect(() => {
+    if (timeLeft <= 0 && battleState?.status === "fighting") {
+      handleTimeout();
+    }
+  }, [timeLeft]);
+
+  function handleTimeout() {
+    setBattleState((prev) => {
+      const nextWildIndex = prev.activeWildIndex + 1;
+      const isFinished = nextWildIndex >= prev.wild.length;
+
+      return {
+        ...prev,
+        activeWildIndex: isFinished ? prev.activeWildIndex : nextWildIndex,
+        status: isFinished ? "finished" : prev.status,
+      };
+    });
+
+    setTimeLeft(initialTime);
+  }
+
+  const timePercent = (timeLeft / initialTime) * 100;
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
 
   // handles level complete
   useEffect(() => {
@@ -88,7 +126,13 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       wild[next.activeWildIndex] = target;
       next.wild = wild;
 
-      return processWildState(next);
+      const newState = processWildState(next);
+
+      if (newState.activeWildIndex !== prev.activeWildIndex || newState.status === "finished") {
+        setTimeLeft(initialTime);
+      }
+
+      return newState;
     });
   }
 
@@ -111,15 +155,25 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       </div>
       
       <div className="flex-1 flex flex-col h-full">
-        <div className="bg-dark-gray p-3">
+        <div className="bg-dark-gray p-3 flex items-center gap-3">
           <h1 className="font-quantico font-bold text-xl text-white pl-1">
             {isBossLevel ? "FINAL LEVEL" : `LEVEL ${levelNumber}`}
           </h1>
 
           {/* timer */}
+          <div className="flex flex-1 items-center p-1 h-7 ml-10 bg-black rounded">
+            <p className="font-quantico font-bold text-white px-1 pr-2">TIME</p>
+            <div className="w-full rounded bg-white">
+              <div
+              className="bg-slate-blue rounded h-5"
+              style={{ width: `${timePercent}%` }}
+              />
+            </div>
+          </div>
+          <p className='font-quantico font-bold text-white mr-2'>
+            {minutes}:{seconds.toString().padStart(2, '0')}
+          </p>
         </div>
-
-        {/* if level 5, show the boss battle page lol */}
 
         <BattleLayout 
           pokemon={activeWild}

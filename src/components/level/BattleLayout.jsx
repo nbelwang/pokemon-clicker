@@ -1,9 +1,11 @@
+import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
 export default function BattleLayout({ pokemon, attack, status, encounter }) {
+  const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
   const isBossLevel = levelNumber === "5";
 
@@ -24,12 +26,10 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
             backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})` 
          }}>
 
-      <div className='p-3'>
-        <p className='font-silkscreen text-white'>encounter: {encounter}</p>
-      </div>
+      <p className='font-silkscreen text-white p-3'>encounter: {encounter}</p>
+      
+      <div className='flex flex-col flex-1 items-center pt-2'>
 
-      <div className='flex flex-col flex-1 items-center pt-8'>
-        
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
           <div className="flex items-end justify-between mb-1">
@@ -53,8 +53,12 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
           onClick={attack}
         />
       </div>
-      
 
+      <div className='flex gap-3 w-20 m-4 px-2 border-3 border-royal-blue rounded-md bg-yellow font-silkscreen text-royal-blue'>
+        <p>XP </p>
+        <p className=''>{playerData.xp}</p>
+      </div>
+      
     </div>
   )
 }
