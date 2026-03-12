@@ -15,7 +15,7 @@ export default function InventoryCard({pokemon, index, activeCaughtIndex, setAct
                       ? "border-powder-blue bg-powder-blue cursor-not-allowed opacity-75" 
                       : isActive
                         ? "border-yellow border-8 bg-cream cursor-pointer"
-                        : "border-royal-blue bg-white cursor-pointer hover:bg-cream"
+                        : "border-royal-blue bg-white cursor-pointer hover:bg-gray-100"
                 }`}
       onClick={handleClick}
     >

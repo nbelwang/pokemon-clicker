@@ -15,7 +15,7 @@ export default function LevelComplete() {
                 <p className='font-quantico font-bold text-xl tracking-widest'>You have encountered all pokemon on this level!</p>
 
                <NavLink to={`/home/level/${nextLevel}`} 
-                    className={`rounded-lg flex flex-col items-center p-4 hover:brightness-110 transition-all 
+                    className={`rounded-lg flex flex-col items-center p-4 hover:brightness-95 transition-all 
                     ${isBossLevel ? "bg-salmon" : "bg-yellow"}`}> 
                     <p className='font-silkscreen'>
                         {isBossLevel ? "Final Level >" : "Next Level >"}

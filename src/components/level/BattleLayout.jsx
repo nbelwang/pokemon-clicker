@@ -18,7 +18,6 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
   }
 
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
-  console.log(hpPercent)
 
   return (
     <div className="flex flex-col flex-1 gap-3 bg-cover bg-center"
