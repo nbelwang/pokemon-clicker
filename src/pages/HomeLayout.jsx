@@ -1,5 +1,4 @@
 import { useOutletContext, NavLink, Link} from 'react-router-dom'
-
 import lockImage from '../assets/lock.png'
 import smileImage from '../assets/smile.png'
 import pokeballImage from '../assets/pokeball.svg'

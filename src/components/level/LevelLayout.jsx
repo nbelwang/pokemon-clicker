@@ -9,7 +9,7 @@ const processWildState = (state) => {
 
   if (activeWild.hp > 0) return state;
 
-  // if wild pokemon has fainted 
+  // if wild pokemon has fainted, update battle state
   const updatedWild = [...state.wild];
   const faintedPokemon = { ...activeWild, hp: 0, alive: false };
   updatedWild[state.activeWildIndex] = faintedPokemon;
@@ -17,14 +17,14 @@ const processWildState = (state) => {
   // add to caught list
   const updatedCaught = [...state.caught, faintedPokemon];
 
-  const nextIndex = state.activeWildIndex + 1;
-  const isFinished = nextIndex >= state.wild.length;
+  const nextWildIndex = state.activeWildIndex + 1;
+  const isFinished = nextWildIndex >= state.wild.length;
 
   return {
     ...state,
     wild: updatedWild,
     caught: updatedCaught,
-    activeWildIndex: isFinished ? state.activeWildIndex : nextIndex,
+    activeWildIndex: isFinished ? state.activeWildIndex : nextWildIndex,
     status: isFinished ? "finished" : state.status,
   };
 };
@@ -33,6 +33,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
   const [battleState, setBattleState] = useState(null);
+  const isBossLevel = levelNumber === "5";
 
   useEffect(() => {
     // ONLY initialize if there is no state yet, and there is data
@@ -83,7 +84,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       const wild = [...next.wild];
       const target = { ...wild[next.activeWildIndex] };
 
-      target.hp -= 20; // Or apply multiplier
+      target.hp -= 10; // apply multiplier later
       wild[next.activeWildIndex] = target;
       next.wild = wild;
 
@@ -111,7 +112,10 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
       
       <div className="flex-1 flex flex-col h-full">
         <div className="bg-dark-gray p-3">
-          <h1 className="font-quantico font-bold text-xl text-white pl-1">LEVEL {levelNumber}</h1>
+          <h1 className="font-quantico font-bold text-xl text-white pl-1">
+            {isBossLevel ? "FINAL LEVEL" : `LEVEL ${levelNumber}`}
+          </h1>
+
           {/* timer */}
         </div>
 
@@ -121,7 +125,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, timer
           pokemon={activeWild}
           attack={playerAttack}
           status={battleState.status}
-          encounter={encounter}
+          encounter={isBossLevel ? "FINAL BATTLE" : encounter}
         />
 
         {/* multiplier */}

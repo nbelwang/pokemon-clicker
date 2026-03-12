@@ -2,31 +2,45 @@ import { useOutletContext } from 'react-router-dom'
 import { useQueries } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import LevelLayout from '../components/level/LevelLayout'
 import { fetchLevelPokemon, fetchTypesEffectiveAgainst } from '../utils/api'
+import LevelLayout from '../components/level/LevelLayout'
 import pokemonLevels from '../utils/pokemonLevels.json'
+import hessFace from '../assets/smilehess.png'
+
+const BOSS_DATA = {
+  id: 'final-boss', 
+  name: 'ROB HESS',
+  hp: 100000,
+  maxHp: 100000,
+  attack: 1000, 
+  sprite: hessFace, 
+  types: [],
+};
 
 export default function Level() {
   const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
   const [wildPokemonIds, setWildPokemonIds] = useState([]);
+
+  const isBossLevel = levelNumber === "5";
   
   // number of encounters per level  
-  const wildPokemonPerLevel = {
-    1: 5,
-    2: 4,
-    3: 3,
-    4: 2
-  }
+  const wildPokemonPerLevel = {1: 5, 2: 4, 3: 3, 4: 2}
   const numWild = wildPokemonPerLevel[levelNumber] || 0
-  const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
   
+  // set the wildPokemonIds every time level changes
   useEffect(() => {
+    if (isBossLevel) {
+      setWildPokemonIds([]);
+      return;
+    }
+
+    const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
     const available = allLevelPokemonIds.filter(id => !playerData.pokemon.includes(id));
     const selected = [...available].sort(() => Math.random() - 0.5).slice(0, numWild);
     
     setWildPokemonIds(selected);
-  }, [levelNumber]); // Triggers every time the URL param changes
+  }, [levelNumber]); 
   
   // fetch data for caught and wild pokemon 
   const allPokemonIds = [...new Set([...playerData.pokemon, ...wildPokemonIds])]
@@ -55,12 +69,14 @@ export default function Level() {
   const isTypesLoading = typeQueries.some(q => q.isLoading)
   
   if (isPokemonLoading || isTypesLoading) {
-    return <div className="p-10 text-white">Loading...</div>
+    return <div className="p-10 font-quantico">Loading...</div>
   }
 
   const pokemon = pokemonQueries.map(q => q.data).filter(Boolean)
   const caughtPokemon = pokemon.filter(p => playerData.pokemon.includes(p.id))
-  const wildPokemon = pokemon.filter(p => wildPokemonIds.includes(p.id))
+  const wildPokemon = isBossLevel 
+      ? [BOSS_DATA] 
+      : pokemon.filter(p => wildPokemonIds.includes(p.id));
 
   const typeMap = Object.fromEntries(
     typeQueries

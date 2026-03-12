@@ -1,21 +1,28 @@
+import { useParams } from 'react-router-dom'
 import bgImage from '../../assets/background.png'
+import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
 export default function BattleLayout({ pokemon, attack, status, encounter }) {
+  const { levelNumber } = useParams()
+  const isBossLevel = levelNumber === "5";
 
   if (status === "finished") {
     return <LevelComplete />
   }
 
   if (!pokemon) {
-    return <div className="p-10">Loading...</div>
+    return <div className="p-10 font-quantico">Loading...</div>
   }
 
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
+  console.log(hpPercent)
 
   return (
     <div className="flex flex-col flex-1 gap-3 bg-cover bg-center"
-         style={{ backgroundImage: `url(${bgImage})` }}>
+         style={{ 
+            backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})` 
+         }}>
 
       <div className='p-3'>
         <p className='font-silkscreen text-white'>encounter: {encounter}</p>
@@ -42,7 +49,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
 
         <img
           src={pokemon.sprite}
-          className="cursor-pointer h-110 w-110"
+          className="cursor-pointer h-110"
           onClick={attack}
         />
       </div>
