@@ -2,11 +2,31 @@ import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 export default function PokedexCard(props) {
+  const { playerData, updateData } = useOutletContext() || {}
+
+  const handleRemove = (e) => {
+    e.stopPropagation()
+    if (playerData && updateData && props.id) {
+      updateData({ pokemon: playerData.pokemon.filter(id => id !== props.id) })
+    }
+  }
+
   return (
     <div
-      className={`bg-white border border-powder-blue rounded-xl p-6 grow flex shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
+      className={`relative bg-white border border-powder-blue rounded-xl p-6 grow flex shadow ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
       onClick={props.onClick}
     >
+        {props.isCaught && props.id && (
+          <button
+            onClick={handleRemove}
+            className="absolute top-4 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors"
+            title="Remove from inventory"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
+        )}
         <img
           src={props.frontSprite}
           alt={props.name}

@@ -62,6 +62,7 @@ export default function PokedexSearch({ onSelect, className = '' }) {
         {filteredPokemon.map(p => (
           <PokedexCard
             key={p.id}
+            id={p.id}
             name={p.name}
             frontSprite={p.sprites.front_default}
             types={p.types}
