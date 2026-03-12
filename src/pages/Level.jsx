@@ -1,38 +1,49 @@
 import { useOutletContext } from 'react-router-dom'
 import { useQueries } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { useMemo } from 'react'
-import LevelLayout from '../components/level/LevelLayout'
+import { useState, useEffect } from 'react'
 import { fetchLevelPokemon, fetchTypesEffectiveAgainst } from '../utils/api'
+import LevelLayout from '../components/level/LevelLayout'
 import pokemonLevels from '../utils/pokemonLevels.json'
+import hessFace from '../assets/smilehess.png'
 
-export default function Levels() {
-  const { playerData, updateData } = useOutletContext()
+const BOSS_DATA = {
+  id: 'final-boss', 
+  name: 'ROB HESS',
+  hp: 100000,
+  maxHp: 100000,
+  attack: 1000, 
+  sprite: hessFace, 
+  types: [],
+};
+
+export default function Level() {
+  const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
+  const [wildPokemonIds, setWildPokemonIds] = useState([]);
+
+  const isBossLevel = levelNumber === "5";
   
   // number of encounters per level  
-  const wildPokemonPerLevel = {
-    1: 5,
-    2: 4,
-    3: 3,
-    4: 2
-  }
+  const wildPokemonPerLevel = {1: 5, 2: 4, 3: 3, 4: 2}
   const numWild = wildPokemonPerLevel[levelNumber] || 0
-  const allLevelPokemon = pokemonLevels[`level${levelNumber}`] || []
+  
+  // set the wildPokemonIds every time level changes
+  useEffect(() => {
+    if (isBossLevel) {
+      setWildPokemonIds([]);
+      return;
+    }
 
-  // if wildPokemon is empty, grabs numWild pokemon from allLevelPokemon ONLY ONCE
-  const wildPokemon = useMemo(() => {
-    if (playerData.wildPokemon?.length) return playerData.wildPokemon
-
-    const selected = [...allLevelPokemon].sort(() => Math.random() - 0.5).slice(0, numWild)
-
-    updateData({ wildPokemon: selected })
-
-    return selected
-  }, [allLevelPokemon, numWild, playerData.wildPokemon])
+    const allLevelPokemonIds = pokemonLevels[`level${levelNumber}`] || []
+    const available = allLevelPokemonIds.filter(id => !playerData.pokemon.includes(id));
+    const selected = [...available].sort(() => Math.random() - 0.5).slice(0, numWild);
     
+    setWildPokemonIds(selected);
+  }, [levelNumber]); 
+  
   // fetch data for caught and wild pokemon 
-  const allPokemonIds = [...new Set([...playerData.pokemon, ...playerData.wildPokemon])]
+  const allPokemonIds = [...new Set([...playerData.pokemon, ...wildPokemonIds])]
 
   const pokemonQueries = useQueries({
     queries: allPokemonIds.map((id) => ({
@@ -42,10 +53,8 @@ export default function Levels() {
     }))
   })
 
-  const pokemon = pokemonQueries.map(q => q.data).filter(Boolean)
-
   // create type map to determine the types the pokemon are effective against
-  const types = [...new Set(pokemon.flatMap(p => p.types))]
+  const types = [...new Set(pokemonQueries.flatMap(q => q.data?.types || []))]
 
   const typeQueries = useQueries({
     queries: types.map((type) => ({
@@ -55,7 +64,20 @@ export default function Levels() {
       enabled: !!types.length
     }))
   })  
+
+  const isPokemonLoading = pokemonQueries.some(q => q.isLoading)
+  const isTypesLoading = typeQueries.some(q => q.isLoading)
   
+  if (isPokemonLoading || isTypesLoading) {
+    return <div className="p-10 font-quantico">Loading...</div>
+  }
+
+  const pokemon = pokemonQueries.map(q => q.data).filter(Boolean)
+  const caughtPokemon = pokemon.filter(p => playerData.pokemon.includes(p.id))
+  const wildPokemon = isBossLevel 
+      ? [BOSS_DATA] 
+      : pokemon.filter(p => wildPokemonIds.includes(p.id));
+
   const typeMap = Object.fromEntries(
     typeQueries
       .map(q => q.data)
@@ -64,12 +86,12 @@ export default function Levels() {
   )
 
   return (
-    <div className="">
+    <div className="flex flex-1 h-full min-h-0 overflow-hidden">
 
       <LevelLayout 
-        pokemon={pokemon}
-        caughtPokemonIds={playerData.pokemon}
-        wildPokemonIds={playerData.wildPokemon}
+        key={levelNumber}
+        caughtPokemon={caughtPokemon}
+        wildPokemon={wildPokemon}
         typeMap={typeMap}
       />
       

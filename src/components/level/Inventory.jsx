@@ -1,26 +1,28 @@
-import { useOutletContext } from 'react-router-dom'
+import InventoryCard from './InventoryCard'
 
-export default function Inventory({ caughtPokemon, typeMap}) {
-  const { playerData, updateData } = useOutletContext()
+export default function Inventory({ caughtPokemon, activeCaughtIndex, setActiveCaught}) {
+  const hasPokemon = caughtPokemon && caughtPokemon.length > 0;
 
   return (
-    <div className="">
-      <h1 className="font-quantico font-bold text-xl mb-2 text-royal-blue">My Pokémon</h1>
+    <div className="flex flex-col w-full h-full">
+      <h1 className="font-quantico font-bold text-xl mb-3 text-royal-blue">My Pokémon</h1>
 
-      <div className="space-y-4">
-        {caughtPokemon.map((p) => (
-          <div key={p.id} className="border p-3">
-            <img src={p.sprite} alt={p.name} />
-            <p>ID: {p.id}</p>
-            <p>Name: {p.name}</p>
-            <p>HP: {p.totalHP}</p>
-            <p>Attack: {p.attack}</p>
-            <p>Types: {p.types.join(", ")}</p>
-            <p>
-              Effective Against: {[...new Set(p.types.flatMap(type => typeMap[type] || []))].join(", ")}
-            </p>
-          </div>
-        ))}
+      <div className="flex flex-col flex-1 gap-2 pr-3 overflow-y-auto min-h-0">
+        {!hasPokemon ? (
+          <p className="font-quantico text-royal-blue/50 m-1">
+            No Pokémon caught yet...
+          </p>
+        ) : (
+          caughtPokemon.map((pokemon, index) => (
+            <InventoryCard
+              key={pokemon.id}
+              pokemon={pokemon}
+              index={index}
+              activeCaughtIndex={activeCaughtIndex}
+              setActiveCaught={setActiveCaught}
+            />
+          ))
+        )}
       </div>
 
     </div>
