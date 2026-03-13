@@ -1,4 +1,8 @@
+import { useOutletContext } from 'react-router-dom'
+
 export default function Stats() {
+    const { playerData } = useOutletContext()
+
     return (
       <div className="h-full p-20">
         <h1 className="font-silkscreen font-bold text-5xl text-royal-blue mb-4">
@@ -10,10 +14,10 @@ export default function Stats() {
           {/* Row 1 */}
           <div className="contents group">
             <div className="bg-white p-6 border-r border-b border-royal-blue group-hover:bg-yellow-200">
-              <p className="text-xl font-quantico">Levels Earned</p>
+              <p className="text-xl font-quantico">Job</p>
             </div>
             <div className="bg-white p-6 text-right border-b border-royal-blue group-hover:bg-yellow-200">
-              <p className="text-xl font-quantico">4/5</p>
+              <p className="text-xl font-quantico">{playerData.stats.employment}</p>
             </div>
           </div>
 

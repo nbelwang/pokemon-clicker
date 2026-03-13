@@ -10,11 +10,19 @@ import hessFace from '../assets/smilehess.png'
 const BOSS_DATA = {
   id: 'final-boss', 
   name: 'ROB HESS',
-  hp: 100000,
-  maxHp: 100000,
-  attack: 1000, 
+  hp: 500,
+  maxHp: 500,
+  attack: 240, 
   sprite: hessFace, 
   types: [],
+};
+
+const LEVEL_CONFIG = {
+  1: { numWild: 3, timeLimit: 60 },  // in seconds
+  2: { numWild: 3, timeLimit: 25 },
+  3: { numWild: 4, timeLimit: 30 },
+  4: { numWild: 2, timeLimit: 25 },
+  5: { numWild: 1, timeLimit: 120 }, 
 };
 
 export default function Level() {
@@ -24,9 +32,9 @@ export default function Level() {
 
   const isBossLevel = levelNumber === "5";
   
-  // number of encounters per level  
-  const wildPokemonPerLevel = {1: 5, 2: 4, 3: 3, 4: 2}
-  const numWild = wildPokemonPerLevel[levelNumber] || 0
+  const config = LEVEL_CONFIG[levelNumber] || { numWild: 0, timeLimit: 60 };
+  const numWild = config.numWild; // number of encounters per level  
+  const timeLimit = config.timeLimit;
   
   // set the wildPokemonIds every time level changes
   useEffect(() => {
@@ -93,6 +101,7 @@ export default function Level() {
         caughtPokemon={caughtPokemon}
         wildPokemon={wildPokemon}
         typeMap={typeMap}
+        initialTime={timeLimit}
       />
       
     </div>
