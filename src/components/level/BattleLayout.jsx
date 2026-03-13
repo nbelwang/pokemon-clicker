@@ -4,7 +4,7 @@ import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
-export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon }) {
+export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon, tempXP, showEffective }) {
   const { levelNumber } = useParams()
   const [showResult, setShowResult] = useState(false);
   const isBossLevel = levelNumber === "5";
@@ -36,22 +36,28 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
 
   return (
-    <div className="flex flex-col flex-1 gap-3 bg-cover bg-center"
+    <div className="relative flex flex-col flex-1 gap-3 bg-cover bg-center"
          style={{ 
             backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})` 
          }}>
 
       <p className='font-silkscreen text-white p-3'>encounter: {encounter}</p>
-      
+
       {battleActive && (
-        <div className='flex flex-col flex-1 items-center pt-2'>
+        <div className='flex flex-col flex-1 items-center pt-2 relative'>
+
+        {showEffective && (
+          <p className="absolute -top-7 font-silkscreen text-xl text-yellow animate-bounce">
+            Effective!
+          </p>
+        )}
 
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
           <h1 className="font-silkscreen text-2xl mb-1">{pokemon.name}</h1>
           <div className="flex items-end justify-between mb-1 mr-1">
             <p className="font-quantico">Type: {isBossLevel ? "Human" : pokemon.types.join(", ")}</p>
-            <p className="font-quantico">{Math.round(pokemon.hp * 10) / 10} / {pokemon.maxHp}</p>
+            <p className="font-quantico">{pokemon.hp.toFixed(1)} / {pokemon.maxHp}</p>
           </div>
           <div className="flex items-center w-110 p-1 h-7 bg-dark-gray rounded">
             <p className="font-quantico font-bold text-yellow pr-1">HP </p>
@@ -72,6 +78,13 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
       </div>
       )}
 
+      {/* xp and multiplier */}
+      <div>
+        <p className='font-quantico absolute bottom-4 right-4'>
+          XP: {tempXP}
+        </p>
+      </div>
+     
     </div>
   )
 }
