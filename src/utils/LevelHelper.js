@@ -73,13 +73,15 @@ export const caughtPokemonAttack = (state, typeMap, levelNumber) => {
     const wild = [...next.wild];
     const caught = [...next.caught];
 
-    if (!caught.some(p => p.alive)) return state;
+    if (!caught.some(p => p.alive)) return { state, superEffective: false };
 
     const attacker = { ...caught[next.activeCaughtIndex] };
     const target = { ...wild[next.activeWildIndex] };
 
     const baseDamage = Math.round(attacker.attack / 12);
-    const attackValue = isSuperEffective(attacker.types, target.types, typeMap)
+    const superEffective = isSuperEffective(attacker.types, target.types, typeMap);
+    
+    const attackValue = superEffective
         ? baseDamage * 2
         : baseDamage;
 
@@ -87,7 +89,12 @@ export const caughtPokemonAttack = (state, typeMap, levelNumber) => {
     wild[next.activeWildIndex] = target;
     next.wild = wild;
 
-    return processWildState(next, Number(levelNumber) === 5);
+    const newState = processWildState(next, Number(levelNumber) === 5);
+
+    return {
+        state: newState,
+        superEffective
+    };
 };
 
 export const wildPokemonAttack = (state, typeMap) => {

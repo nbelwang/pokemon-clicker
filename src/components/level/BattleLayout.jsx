@@ -4,7 +4,7 @@ import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
-export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon, tempXP }) {
+export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon, tempXP, showEffective }) {
   const { levelNumber } = useParams()
   const [showResult, setShowResult] = useState(false);
   const isBossLevel = levelNumber === "5";
@@ -42,9 +42,15 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
          }}>
 
       <p className='font-silkscreen text-white p-3'>encounter: {encounter}</p>
-      
+
       {battleActive && (
-        <div className='flex flex-col flex-1 items-center pt-2'>
+        <div className='flex flex-col flex-1 items-center pt-2 relative'>
+
+        {showEffective && (
+          <p className="absolute -top-7 font-silkscreen text-xl text-yellow animate-bounce">
+            Effective!
+          </p>
+        )}
 
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">

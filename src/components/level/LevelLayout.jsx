@@ -11,6 +11,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const [battleState, setBattleState] = useState(null);
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [playerCaughtNewPokemon, setPlayerCaughtNewPokemon] = useState(false);
+  const [showEffective, setShowEffective] = useState(false);
   const isBossLevel = levelNumber === "5";
   const timePercent = (timeLeft / initialTime) * 100;
 
@@ -69,7 +70,14 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     setBattleState(prev => {
       if (prev.status !== "fighting") return prev;
 
-      const next = caughtPokemonAttack(prev, typeMap, levelNumber);
+      const { state: next, superEffective } = caughtPokemonAttack(prev, typeMap, levelNumber);
+
+      console.log(superEffective)
+
+      if (superEffective) {
+        setShowEffective(true);
+        setTimeout(() => setShowEffective(false), 1000);
+      }
 
       if (next.activeWildIndex !== prev.activeWildIndex || next.status === "finished") {
         setTimeLeft(initialTime);
@@ -174,6 +182,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           encounter={isBossLevel ? "FINAL BATTLE" : encounter}
           playerCaughtNewPokemon={playerCaughtNewPokemon}
           tempXP={playerData.xp + battleState.gainedXP}
+          showEffective={showEffective}
         />
       </div>
     </div>
