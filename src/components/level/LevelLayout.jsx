@@ -13,8 +13,6 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const [playerCaughtNewPokemon, setPlayerCaughtNewPokemon] = useState(false);
   const isBossLevel = levelNumber === "5";
   const timePercent = (timeLeft / initialTime) * 100;
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
 
   // initializes battle state once pokemon data has loaded
   useEffect(() => {
@@ -163,7 +161,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
             </div>
           </div>
           <p className='font-quantico font-bold text-white mr-2'>
-            {minutes}:{seconds.toString().padStart(2, '0')}
+            {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
           </p>
         </div>
 
