@@ -128,7 +128,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     }
   }, [battleState?.status]);
 
-  if (!battleState) return <div>Loading...</div>;
+  if (!battleState) return <div className="font-quantico text-xl font-bold">Loading...</div>;
 
   const activeWild = battleState.wild[battleState.activeWildIndex]
   const encounter = `${battleState.activeWildIndex + 1}/${battleState.wild.length}`
