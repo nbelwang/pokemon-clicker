@@ -10,19 +10,19 @@ import hessFace from '../assets/smilehess.png'
 const BOSS_DATA = {
   id: 'final-boss', 
   name: 'ROB HESS',
-  hp: 100000,
-  maxHp: 100000,
-  attack: 1000, 
+  hp: 1000,
+  maxHp: 1000,
+  attack: 600, 
   sprite: hessFace, 
   types: [],
 };
 
 const LEVEL_CONFIG = {
-  1: { numWild: 5, timeLimit: 10 },  // in seconds
-  2: { numWild: 4, timeLimit: 45 },
-  3: { numWild: 3, timeLimit: 30 },
+  1: { numWild: 5, timeLimit: 100 },  // in seconds
+  2: { numWild: 4, timeLimit: 20 },
+  3: { numWild: 3, timeLimit: 20 },
   4: { numWild: 2, timeLimit: 20 },
-  5: { numWild: 1, timeLimit: 5 }, 
+  5: { numWild: 1, timeLimit: 20 }, 
 };
 
 export default function Level() {

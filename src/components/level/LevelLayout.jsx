@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Inventory from './Inventory'
 import BattleLayout from './BattleLayout'
 
-const processWildState = (state) => {
+const processWildState = (state, isFinalBoss = false) => {
   const activeWild = state.wild[state.activeWildIndex];
 
   if (activeWild.hp > 0) return state;
@@ -15,7 +15,9 @@ const processWildState = (state) => {
   updatedWild[state.activeWildIndex] = faintedPokemon;
 
   // add to caught list
-  const updatedCaught = [...state.caught, faintedPokemon];
+  const updatedCaught = isFinalBoss
+    ? [...state.caught] // do not add hess to caught array lol
+    : [...state.caught, faintedPokemon];
 
   const nextWildIndex = state.activeWildIndex + 1;
   const isFinished = nextWildIndex >= state.wild.length;
@@ -29,15 +31,37 @@ const processWildState = (state) => {
   };
 };
 
+const processCaughtState = (state) => {
+  const activeCaught = state.caught[state.activeCaughtIndex];
+
+  if (activeCaught.hp > 0) return state;
+
+  const updatedCaught = [...state.caught];
+  const faintedPokemon = { ...activeCaught, hp: 0, alive: false };
+  
+  updatedCaught[state.activeCaughtIndex] = faintedPokemon;
+
+  const nextCaughtIndex = updatedCaught.findIndex(p => p.alive);
+  const isFailed = updatedCaught.every(p => !p.alive);
+
+  return {
+    ...state,
+    caught: updatedCaught,
+    activeCaughtIndex: isFailed ? state.activeCaughtIndex : nextCaughtIndex,
+    status: isFailed ? "failed" : state.status,
+  };
+};
+
 export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initialTime}) {
   const { playerData, updateData } = useOutletContext()
   const { levelNumber } = useParams()
   const [battleState, setBattleState] = useState(null);
   const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [playerCaughtNewPokemon, setPlayerCaughtNewPokemon] = useState(false);
   const isBossLevel = levelNumber === "5";
 
+  // initializes battle state once pokemon data has loaded
   useEffect(() => {
-    // ONLY initialize if there is no state yet, and there is data
     if (!battleState && wildPokemon.length > 0) {
       setBattleState({
         wild: wildPokemon.map(p => ({ ...p, 
@@ -73,7 +97,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     if (timeLeft <= 0 && battleState?.status === "fighting") {
       handleTimeout();
     }
-  }, [timeLeft]);
+  }, [timeLeft, battleState]);
 
   function handleTimeout() {
     setBattleState((prev) => {
@@ -94,18 +118,44 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
+  // idle wild pokemon attack
+  useEffect(() => {
+    if (!battleState || battleState.status !== "fighting") return;
+
+    const attackInterval = setInterval(() => {
+      wildPokemonAttack();
+    }, 1000); 
+
+    return () => clearInterval(attackInterval);
+  }, [battleState?.activeWildIndex, battleState?.activeCaughtIndex, battleState?.status]);
+
+  // idle caught pokemon attack 
+  useEffect(() => {
+    if (!battleState || battleState.status !== "fighting") return;
+
+    const interval = setInterval(() => {
+      caughtPokemonAttack();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [battleState?.activeWildIndex, battleState?.activeCaughtIndex, battleState?.status]);
+
   // handles level complete
   useEffect(() => {
-    if (battleState?.status === "finished") {
+    if (battleState?.status === "finished" || battleState?.status === "failed") {
       const caughtIds = battleState.caught.map(p => p.id);
 
-      const nextLevelReached = Number(levelNumber) + 1;
-      const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
-      
-      updateData({ 
-        pokemon: caughtIds,
-        levelsUnlocked: newLevelsUnlocked 
-      });
+      setPlayerCaughtNewPokemon(battleState.caught.length > caughtPokemon.length);
+
+      if (battleState.status === "finished") {
+        const nextLevelReached = Number(levelNumber) + 1;
+        const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
+        
+        updateData({ 
+          pokemon: caughtIds,
+          levelsUnlocked: newLevelsUnlocked 
+        });
+      }
     }
   }, [battleState?.status]);
 
@@ -115,24 +165,90 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const encounter = `${battleState.activeWildIndex + 1}/${battleState.wild.length}`
 
   function playerAttack() {
-    if (battleState.status === "finished") return;
-
     setBattleState((prev) => {
+      if (prev.status !== "fighting") return prev;
       const next = { ...prev };
       const wild = [...next.wild];
       const target = { ...wild[next.activeWildIndex] };
 
-      target.hp -= 10; // apply multiplier later
+      target.hp -= 0.1;
       wild[next.activeWildIndex] = target;
       next.wild = wild;
 
-      const newState = processWildState(next);
+      const newState = processWildState(next, Number(levelNumber) === 5);
 
       if (newState.activeWildIndex !== prev.activeWildIndex || newState.status === "finished") {
         setTimeLeft(initialTime);
       }
 
       return newState;
+    });
+  }
+
+  function isSuperEffective(attackerTypes, targetTypes) {
+    return attackerTypes.some(attackerType =>
+      targetTypes.some(targetType => typeMap[attackerType]?.includes(targetType))
+    );
+  }
+
+  function caughtPokemonAttack() {
+    setBattleState((prev) => {
+      if (prev.status !== "fighting") return prev;
+
+      const hasAliveCaught = prev.caught.some(p => p.alive);
+      if (!hasAliveCaught) return prev;
+
+      const next = { ...prev };
+      const wild = [...next.wild];
+      const caught = [...next.caught];
+
+      const attacker = { ...caught[next.activeCaughtIndex] };
+      const target = { ...wild[next.activeWildIndex] };
+
+      const baseDamage = Math.round(attacker.attack / 10);
+      const superEffective = isSuperEffective(attacker.types, target.types);
+
+      const attackValue = superEffective
+        ? baseDamage * 2
+        : baseDamage;
+
+      target.hp -= attackValue;
+
+      wild[next.activeWildIndex] = target;
+      next.wild = wild;
+
+      return processWildState(next, Number(levelNumber) === 5);
+    });
+  }
+
+  function wildPokemonAttack() {
+    setBattleState((prev) => {
+      if (prev.status !== "fighting") return prev;
+
+      // skip if no alive caught pokemon
+      const hasAliveCaught = prev.caught.some(p => p.alive);
+      if (!hasAliveCaught) return prev;
+
+      const next = { ...prev };
+      const wild = [...next.wild];
+      const caught = [...next.caught];
+
+      const attacker = { ...wild[next.activeWildIndex] };
+      const target = { ...caught[next.activeCaughtIndex] };
+
+      const baseDamage = Math.round(attacker.attack / 10);
+      const superEffective = isSuperEffective(attacker.types, target.types);
+
+      const attackValue = superEffective
+        ? baseDamage * 2
+        : baseDamage;
+
+      target.hp -= attackValue;
+
+      caught[next.activeCaughtIndex] = target;
+      next.caught = caught;
+
+      return processCaughtState(next);
     });
   }
 
@@ -180,15 +296,9 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           attack={playerAttack}
           status={battleState.status}
           encounter={isBossLevel ? "FINAL BATTLE" : encounter}
+          playerCaughtNewPokemon={playerCaughtNewPokemon}
         />
-
-        {/* multiplier */}
-        {/* xp */}
-
       </div>
-      
-      
-     
     </div>
   )
 }

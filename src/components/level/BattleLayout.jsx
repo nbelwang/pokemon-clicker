@@ -4,13 +4,18 @@ import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
-export default function BattleLayout({ pokemon, attack, status, encounter }) {
+export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon }) {
   const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
   const isBossLevel = levelNumber === "5";
 
-  if (status === "finished") {
-    return <LevelComplete />
+  if (status === "finished" || status === "failed") {
+    return (
+      <LevelComplete
+        status={status}
+        playerCaughtNewPokemon={playerCaughtNewPokemon}
+      />  
+    )
   }
 
   if (!pokemon) {
@@ -31,9 +36,10 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
 
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
-          <div className="flex items-end justify-between mb-1">
-            <h1 className="font-silkscreen text-2xl">{pokemon.name}</h1>
-            <p className="font-quantico mr-1">{pokemon.hp} / {pokemon.maxHp}</p>
+          <h1 className="font-silkscreen text-2xl mb-1">{pokemon.name}</h1>
+          <div className="flex items-end justify-between m-1">
+            <p className="font-quantico">Type: {pokemon.types.join(", ")}</p>
+            <p className="font-quantico">{Math.round(pokemon.hp * 10) / 10} / {pokemon.maxHp}</p>
           </div>
           <div className="flex items-center w-110 p-1 h-7 bg-dark-gray rounded">
             <p className="font-quantico font-bold text-yellow pr-1">HP </p>
@@ -53,11 +59,6 @@ export default function BattleLayout({ pokemon, attack, status, encounter }) {
         />
       </div>
 
-      <div className='flex gap-3 w-20 m-4 px-2 border-3 border-royal-blue rounded-md bg-yellow font-silkscreen text-royal-blue'>
-        <p>XP </p>
-        <p className=''>{playerData.xp}</p>
-      </div>
-      
     </div>
   )
 }
