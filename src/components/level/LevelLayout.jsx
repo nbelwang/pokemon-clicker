@@ -72,8 +72,6 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
 
       const { state: next, superEffective } = caughtPokemonAttack(prev, typeMap, levelNumber);
 
-      console.log(superEffective)
-
       if (superEffective) {
         setShowEffective(true);
         setTimeout(() => setShowEffective(false), 1000);
