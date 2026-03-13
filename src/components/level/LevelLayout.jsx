@@ -54,6 +54,12 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   }, [timeLeft, battleState, initialTime]);
 
   const handlePlayerAttack = () => {
+    updateData({
+      stats: {
+        ...playerData.stats,
+        totalClicks: (playerData.stats?.totalClicks ?? 0) + 1
+      }
+    });
     setBattleState(prev => {
       if (prev.status !== "fighting") return prev;
       

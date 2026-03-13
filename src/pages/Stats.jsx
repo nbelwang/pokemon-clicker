@@ -27,7 +27,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Total Clicks</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-yellow-200 min-w-fit">
-              <p className="text-sm sm:text-xl font-quantico whitespace-nowrap">676767676767</p>
+              <p className="text-sm sm:text-xl font-quantico whitespace-nowrap">{playerData.stats?.totalClicks ?? 0}</p>
             </div>
           </div>
 
