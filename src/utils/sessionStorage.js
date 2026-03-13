@@ -4,7 +4,7 @@ const DEFAULT_STATE = {
   pokemon: [],
   xp: 0,
   itemMultiplier: 1,
-  levelsUnlocked: 5,
+  levelsUnlocked: 1,
   stats: {
     pokemonCaught: 0,
     totalDamageDealt: 0,

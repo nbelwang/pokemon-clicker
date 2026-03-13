@@ -37,7 +37,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
           <h1 className="font-silkscreen text-2xl mb-1">{pokemon.name}</h1>
-          <div className="flex items-end justify-between m-1">
+          <div className="flex items-end justify-between mb-1 mr-1">
             <p className="font-quantico">Type: {pokemon.types.join(", ")}</p>
             <p className="font-quantico">{Math.round(pokemon.hp * 10) / 10} / {pokemon.maxHp}</p>
           </div>

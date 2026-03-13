@@ -10,7 +10,7 @@ export default function InventoryCard({pokemon, index, activeCaughtIndex, setAct
 
   return (
     <div
-      className={`border-3 rounded-lg flex p-3 gap-4  
+      className={`border-3 rounded-lg flex p-2 gap-4  
                   ${!isAlive
                       ? "border-powder-blue bg-powder-blue cursor-not-allowed opacity-75" 
                       : isActive

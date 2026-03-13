@@ -18,9 +18,9 @@ const BOSS_DATA = {
 };
 
 const LEVEL_CONFIG = {
-  1: { numWild: 5, timeLimit: 100 },  // in seconds
+  1: { numWild: 3, timeLimit: 60 },  // in seconds
   2: { numWild: 4, timeLimit: 20 },
-  3: { numWild: 3, timeLimit: 20 },
+  3: { numWild: 5, timeLimit: 20 },
   4: { numWild: 2, timeLimit: 20 },
   5: { numWild: 1, timeLimit: 20 }, 
 };
