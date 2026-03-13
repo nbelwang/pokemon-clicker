@@ -131,7 +131,8 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           xp: playerData.xp + battleState.gainedXP,
           stats: {
             ...playerData.stats,
-            pokemonCaught: (playerData.stats?.pokemonCaught ?? 0) + newCaught
+            pokemonCaught: (playerData.stats?.pokemonCaught ?? 0) + newCaught,
+            totalWildEncounters: (playerData.stats?.totalWildEncounters ?? 0) + battleState.wild.length
           }
         };
 
@@ -140,6 +141,14 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
         }
 
         updateData(update);
+      } else if (battleState.status === "failed") {
+        const encountersThisRun = battleState.activeWildIndex + 1;
+        updateData({
+          stats: {
+            ...playerData.stats,
+            totalWildEncounters: (playerData.stats?.totalWildEncounters ?? 0) + encountersThisRun
+          }
+        });
       }
     }
   }, [battleState?.status]);

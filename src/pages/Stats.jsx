@@ -36,7 +36,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Total XP Earned</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-yellow-200 min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">14000</p>
+              <p className="text-sm sm:text-xl font-quantico">TODO</p>
             </div>
           </div>
 
@@ -45,7 +45,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Total XP Spent</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-yellow-200 min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">200</p>
+              <p className="text-sm sm:text-xl font-quantico">TODO</p>
             </div>
           </div>
 
@@ -60,10 +60,10 @@ export default function Stats() {
 
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-royal-blue group-hover:bg-yellow-200 min-w-0">
-              <p className="text-sm sm:text-xl font-quantico truncate">Wild Pokemon Fled</p>
+              <p className="text-sm sm:text-xl font-quantico truncate">Wild Pokemon Encounters</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-royal-blue group-hover:bg-yellow-200 min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">38</p>
+              <p className="text-sm sm:text-xl font-quantico">{playerData.stats?.totalWildEncounters ?? 0}</p>
             </div>
           </div>
 
