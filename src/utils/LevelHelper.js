@@ -15,6 +15,7 @@ export const processWildState = (state, isFinalBoss = false) => {
         ? [...state.caught] // do not add hess to caught array lol
         : [...state.caught, faintedPokemon];
 
+    const gainedXP = state.gainedXP + activeWild.maxHp;
     const nextWildIndex = state.activeWildIndex + 1;
     const isFinished = nextWildIndex >= state.wild.length;
 
@@ -23,6 +24,7 @@ export const processWildState = (state, isFinalBoss = false) => {
         wild: updatedWild,
         caught: updatedCaught,
         activeWildIndex: isFinished ? state.activeWildIndex : nextWildIndex,
+        gainedXP: gainedXP,
         status: isFinished ? "finished" : state.status,
     };
 };

@@ -30,6 +30,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
         })),
         activeWildIndex: 0,
         activeCaughtIndex: 0,
+        gainedXP: 0,
         status: "fighting"
       });
     }
@@ -89,7 +90,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   useEffect(() => {
     if (!battleState || battleState.status !== "fighting") return;
     
-    const wildIntervalTime = levelNumber === "1" ? 2500 : 2000;
+    const wildIntervalTime = levelNumber === "1" ? 3000 : 2000;
 
     const wildInterval = setInterval(handleWildAttack, wildIntervalTime);
     const caughtInterval = setInterval(handleCaughtAttack, 2500);
@@ -114,6 +115,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
         const update = {
           pokemon: caughtIds,
           levelsUnlocked: newLevelsUnlocked,
+          xp: playerData.xp + battleState.gainedXP
         };
 
         if (isBossLevel) {
@@ -171,6 +173,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           status={battleState.status}
           encounter={isBossLevel ? "FINAL BATTLE" : encounter}
           playerCaughtNewPokemon={playerCaughtNewPokemon}
+          tempXP={playerData.xp + battleState.gainedXP}
         />
       </div>
     </div>
