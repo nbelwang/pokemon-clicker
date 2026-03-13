@@ -123,18 +123,20 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
       if (battleState.status === "finished") {
         const nextLevelReached = Number(levelNumber) + 1;
         const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
+        const newCaught = caughtIds.length - playerData.pokemon.length;
 
         const update = {
           pokemon: caughtIds,
           levelsUnlocked: newLevelsUnlocked,
-          xp: playerData.xp + battleState.gainedXP
+          xp: playerData.xp + battleState.gainedXP,
+          stats: {
+            ...playerData.stats,
+            pokemonCaught: (playerData.stats?.pokemonCaught ?? 0) + newCaught
+          }
         };
 
         if (isBossLevel) {
-          update.stats = {
-            ...playerData.stats,
-            employment: "Computer Science Senior Instructor II"
-          };
+          update.stats.employment = "Computer Science Senior Instructor II";
         }
 
         updateData(update);

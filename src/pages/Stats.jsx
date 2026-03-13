@@ -54,7 +54,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Pokemon Caught</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-yellow-200 min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">17</p>
+              <p className="text-sm sm:text-xl font-quantico">{playerData.stats?.pokemonCaught ?? 0}</p>
             </div>
           </div>
 
