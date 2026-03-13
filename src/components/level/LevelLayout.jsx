@@ -57,7 +57,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     setBattleState(prev => {
       if (prev.status !== "fighting") return prev;
       
-      const next = playerAttack(prev, levelNumber);
+      const next = playerAttack(prev, levelNumber, playerData.itemMultiplier);
 
       if (next.activeWildIndex !== prev.activeWildIndex || next.status === "finished") {
         setTimeLeft(initialTime);

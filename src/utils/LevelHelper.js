@@ -53,12 +53,12 @@ export const isSuperEffective = (attackerTypes, targetTypes, typeMap) => {
     );
 };
 
-export const playerAttack = (state, levelNumber) => {
+export const playerAttack = (state, levelNumber, clickMultiplier) => {
     const next = { ...state };
     const wild = [...next.wild];
     const target = { ...wild[next.activeWildIndex] };
 
-    target.hp -= 0.2;
+    target.hp -= 0.2 * clickMultiplier;
     wild[next.activeWildIndex] = target;
     next.wild = wild;
 
