@@ -6,6 +6,7 @@ const DEFAULT_STATE = {
   itemMultiplier: 1,
   levelsUnlocked: 1,
   stats: {
+    employment: "Unemployed",
     pokemonCaught: 0,
     totalDamageDealt: 0,
     // TODO: add more stats

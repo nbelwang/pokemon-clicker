@@ -112,11 +112,20 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
       if (battleState.status === "finished") {
         const nextLevelReached = Number(levelNumber) + 1;
         const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
-        
-        updateData({ 
+
+        const update = {
           pokemon: caughtIds,
-          levelsUnlocked: newLevelsUnlocked 
-        });
+          levelsUnlocked: newLevelsUnlocked,
+        };
+
+        if (isBossLevel) {
+          update.stats = {
+            ...playerData.stats,
+            employment: "Computer Science Senior Instructor II"
+          };
+        }
+
+        updateData(update);
       }
     }
   }, [battleState?.status]);
