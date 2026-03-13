@@ -1,15 +1,26 @@
-import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
 
 export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon }) {
-  const { playerData } = useOutletContext()
   const { levelNumber } = useParams()
+  const [showResult, setShowResult] = useState(false);
   const isBossLevel = levelNumber === "5";
+  const battleActive = status === "fighting";
 
-  if (status === "finished" || status === "failed") {
+  useEffect(() => {
+    if (status === "finished" || status === "failed") {
+      const timer = setTimeout(() => {
+        setShowResult(true);
+      }, 2000); // 2 second delay
+
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
+
+  if (showResult) {
     return (
       <LevelComplete
         status={status}
@@ -32,7 +43,8 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
 
       <p className='font-silkscreen text-white p-3'>encounter: {encounter}</p>
       
-      <div className='flex flex-col flex-1 items-center pt-2'>
+      {battleActive && (
+        <div className='flex flex-col flex-1 items-center pt-2'>
 
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
@@ -58,6 +70,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
           onClick={attack}
         />
       </div>
+      )}
 
     </div>
   )

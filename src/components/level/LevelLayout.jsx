@@ -90,12 +90,15 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   // idle attack intervals 
   useEffect(() => {
     if (!battleState || battleState.status !== "fighting") return;
-    const wildInt = setInterval(handleWildAttack, 2000);
-    const caughtInt = setInterval(handleCaughtAttack, 3000);
+    
+    const wildIntervalTime = levelNumber === "1" ? 2500 : 2000;
+
+    const wildInterval = setInterval(handleWildAttack, wildIntervalTime);
+    const caughtInterval = setInterval(handleCaughtAttack, 2500);
 
     return () => {
-      clearInterval(wildInt);
-      clearInterval(caughtInt);
+      clearInterval(wildInterval);
+      clearInterval(caughtInterval);
     };
   }, [battleState?.status, battleState?.activeWildIndex, battleState?.activeCaughtIndex]);
 
@@ -145,7 +148,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
             <p className="font-quantico font-bold text-white px-1 pr-2">TIME</p>
             <div className="w-full rounded bg-white">
               <div
-              className="bg-slate-blue rounded h-5"
+              className="bg-slate-blue rounded h-5 transition-all duration-1000 ease-linear"
               style={{ width: `${timePercent}%` }}
               />
             </div>

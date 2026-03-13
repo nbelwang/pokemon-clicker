@@ -18,11 +18,11 @@ const BOSS_DATA = {
 };
 
 const LEVEL_CONFIG = {
-  1: { numWild: 3, timeLimit: 60 },  // in seconds
-  2: { numWild: 4, timeLimit: 20 },
-  3: { numWild: 5, timeLimit: 20 },
+  1: { numWild: 3, timeLimit: 90 },  // in seconds
+  2: { numWild: 3, timeLimit: 25 },
+  3: { numWild: 4, timeLimit: 25 },
   4: { numWild: 2, timeLimit: 20 },
-  5: { numWild: 1, timeLimit: 20 }, 
+  5: { numWild: 1, timeLimit: 120 }, 
 };
 
 export default function Level() {

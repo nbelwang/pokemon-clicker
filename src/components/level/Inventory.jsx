@@ -9,9 +9,11 @@ export default function Inventory({ caughtPokemon, activeCaughtIndex, setActiveC
 
       <div className="flex flex-col flex-1 gap-2 pr-3 overflow-y-auto min-h-0">
         {!hasPokemon ? (
-          <p className="font-quantico text-royal-blue/50 m-1">
-            No Pokémon caught yet...
-          </p>
+          <div className='flex flex-col gap-3 font-quantico text-black'> 
+            <p>Click on the wild pokemon before it runs away!</p>
+            <p>If you defeat it, it is yours.</p>
+            <p>Your pokemon will deal damage automatically.</p>
+          </div>
         ) : (
           caughtPokemon.map((pokemon, index) => (
             <InventoryCard

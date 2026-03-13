@@ -21,7 +21,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     } else if (isFailed) {
         mainMessage = isInventoryEmpty 
             ? "Huh? You didn't catch any pokemon" 
-            : "Level failed, all of your pokemon fainted!";
+            : "Level failed, all of your pokemon fainted";
     } else {
         mainMessage = "You have encountered all pokemon on this level!";
     }
@@ -50,7 +50,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
         <div className="flex flex-col flex-1 items-center gap-3 bg-cover bg-center"
                  style={{ backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`}}>
         
-            <div className="flex flex-col gap-5 border-6 mt-30 p-10 w-100 border-royal-blue rounded-xl bg-white text-center">
+            <div className="flex flex-col gap-5 border-6 mt-35 p-10 w-100 border-royal-blue rounded-xl bg-white text-center">
             
             <p className='font-quantico font-bold text-xl tracking-widest'>
                 {mainMessage}
