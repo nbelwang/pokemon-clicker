@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Inventory from './Inventory'
 import BattleLayout from './BattleLayout'
 import { playerAttack, caughtPokemonAttack, wildPokemonAttack, handleTimeout } from '../../utils/LevelHelper';
@@ -12,12 +12,14 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [playerCaughtNewPokemon, setPlayerCaughtNewPokemon] = useState(false);
   const [showEffective, setShowEffective] = useState(false);
+  const clicksThisBattleRef = useRef(0);
   const isBossLevel = levelNumber === "5";
   const timePercent = (timeLeft / initialTime) * 100;
 
   // initializes battle state once pokemon data has loaded
   useEffect(() => {
     if (!battleState && wildPokemon.length > 0) {
+      clicksThisBattleRef.current = 0;
       setBattleState({
         wild: wildPokemon.map(p => ({ ...p, 
           hp: p.hp, 
@@ -54,6 +56,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   }, [timeLeft, battleState, initialTime]);
 
   const handlePlayerAttack = () => {
+    clicksThisBattleRef.current += 1;
     setBattleState(prev => {
       if (prev.status !== "fighting") return prev;
       
@@ -117,21 +120,36 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
       if (battleState.status === "finished") {
         const nextLevelReached = Number(levelNumber) + 1;
         const newLevelsUnlocked = Math.max(playerData.levelsUnlocked, nextLevelReached);
+        const newCaught = caughtIds.length - playerData.pokemon.length;
 
         const update = {
           pokemon: caughtIds,
           levelsUnlocked: newLevelsUnlocked,
-          xp: playerData.xp + battleState.gainedXP
+          xp: playerData.xp + battleState.gainedXP,
+          stats: {
+            ...playerData.stats,
+            pokemonCaught: (playerData.stats?.pokemonCaught ?? 0) + newCaught,
+            totalWildEncounters: (playerData.stats?.totalWildEncounters ?? 0) + battleState.wild.length,
+            totalClicks: (playerData.stats?.totalClicks ?? 0) + clicksThisBattleRef.current
+          }
         };
 
         if (isBossLevel) {
-          update.stats = {
-            ...playerData.stats,
-            employment: "Computer Science Senior Instructor II"
-          };
+          update.stats.employment = "Computer Science Senior Instructor II";
         }
 
         updateData(update);
+        clicksThisBattleRef.current = 0;
+      } else if (battleState.status === "failed") {
+        const encountersThisRun = battleState.activeWildIndex + 1;
+        updateData({
+          stats: {
+            ...playerData.stats,
+            totalWildEncounters: (playerData.stats?.totalWildEncounters ?? 0) + encountersThisRun,
+            totalClicks: (playerData.stats?.totalClicks ?? 0) + clicksThisBattleRef.current
+          }
+        });
+        clicksThisBattleRef.current = 0;
       }
     }
   }, [battleState?.status]);

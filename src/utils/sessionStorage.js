@@ -9,6 +9,8 @@ const DEFAULT_STATE = {
     employment: "Unemployed",
     pokemonCaught: 0,
     totalDamageDealt: 0,
+    totalClicks: 0,
+    totalWildEncounters: 0,
     // TODO: add more stats
   }
 }
