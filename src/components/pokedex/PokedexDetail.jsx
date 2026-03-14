@@ -111,6 +111,9 @@ export default function PokedexDetail({ pokemon, className = '' }) {
                         <span className="font-bold text-black mr-2">Base HP :</span>
                         <span className="font-bold text-black">{hp}</span>
                     </div>
+                    <div>
+                        <p><span className="font-bold">ATK:</span> {pokemon.stats[1].base_stat}</p>
+                    </div>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6">
                         <span className="font-bold text-black">Type</span>
                         <div className="flex gap-2">
