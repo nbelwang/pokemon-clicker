@@ -44,7 +44,7 @@ export default function PokedexCard(props) {
         <img
           src={props.frontSprite}
           alt={props.name}
-          className="w-24 h-24 mr-5 bg-powder-blue"
+          className="w-24 h-24 mr-3 bg-powder-blue"
         />
         <div className="font-quantico text-sm flex flex-col gap-1">
           <h2 className="font-press-start text-sm text-dark-gray uppercase">{props.name}</h2>
@@ -53,7 +53,7 @@ export default function PokedexCard(props) {
           <p>
               <span className="font-bold">Type: </span>
               {props.types.map(t => (
-              <span key={t.type.name} className="bg-slate-blue text-dark-gray px-2 py-0.5 rounded mr-1 text-xs">
+              <span key={t.type.name} className="bg-powder-blue text-dark-gray px-1 py-0.2 rounded mr-1 text-xs">
                   {t.type.name}
               </span>
               ))}

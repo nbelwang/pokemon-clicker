@@ -51,7 +51,7 @@ export default function PokedexDetail({ pokemon, className = '' }) {
 
     if (!pokemon) {
         return (
-            <div className={`mb-100 w-full h-full border-[3px] border-royal-blue rounded-4xl bg-white flex flex-col items-center justify-center p-8 ${className}`}>
+            <div className={`mb-100 w-full h-full border-[3px] border-royal-blue rounded-4xl bg-white flex flex-col items-center justify-center p-8 mt-6 ${className}`}>
                 <p className="text-gray-500 font-quantico text-xl">No Pokemon selected</p>
             </div>
         )

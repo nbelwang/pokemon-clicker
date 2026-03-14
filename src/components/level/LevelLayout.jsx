@@ -99,7 +99,10 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   useEffect(() => {
     if (!battleState || battleState.status !== "fighting") return;
     
-    const wildIntervalTime = levelNumber === "1" ? 3000 : 2000;
+    const wildIntervalTime =
+      levelNumber === "1" ? 3000 :
+      levelNumber === "4" ? 1500 :
+      2000;
 
     const wildInterval = setInterval(handleWildAttack, wildIntervalTime);
     const caughtInterval = setInterval(handleCaughtAttack, 2500);
