@@ -15,7 +15,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
 
     let mainMessage;
     if (hasDefeatedBoss) {
-        mainMessage = "Wow! you defeated Hess!";
+        mainMessage = "Wow! You defeated Hess!";
     } else if (isFailed && isBossLevel) {
         mainMessage = "You could not defeat Hess";
     } else if (isFailed) {
@@ -70,7 +70,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
             ) : (
                 <div className="flex flex-col items-center w-full">
                     <p className='font-silkscreen text-yellow pb-2'>you acquired</p>
-                    <p className='font-quantico text-white text-center border-4 border-yellow rounded-lg p-4 w-full'> 
+                    <p className='font-quantico text-white text-center border-4 border-yellow rounded-lg p-4 w-full hover:text-yellow'> 
                         His job. 
                     </p>
                 </div>
