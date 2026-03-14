@@ -12,7 +12,7 @@ const BOSS_DATA = {
   name: 'ROB HESS',
   hp: 494,
   maxHp: 494,
-  attack: 250, 
+  attack: 200, 
   sprite: hessFace, 
   types: [],
 };

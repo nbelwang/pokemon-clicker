@@ -101,7 +101,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     
     const wildIntervalTime =
       levelNumber === "1" ? 3000 :
-      levelNumber === "4" ? 1500 :
+      levelNumber === "4" ? 1100 :
       2000;
 
     const wildInterval = setInterval(handleWildAttack, wildIntervalTime);
