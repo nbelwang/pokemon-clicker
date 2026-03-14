@@ -4,7 +4,7 @@ export default function ItemList(props){
 
     return(
         <>
-        <div>
+        <div className="flex flex-row flex-wrap gap-4">
             {Object.keys(props.data).map((key) => (
                 <ItemCard
                     key={key}
