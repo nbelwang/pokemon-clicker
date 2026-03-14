@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext } from "react-router-dom"
 import ItemList from "../components/shop/ItemList"
 import XPDisplay from "../components/shop/xpDisplay"
+import LoadingScreen from "../components/LoadingScreen"
 
 export default function Shop() {
-    const { playerData } = useOutletContext()
+    const { playerData, updateData } = useOutletContext()
 
-    const [itemsArr, setItemsArr] = useState([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
@@ -68,8 +68,8 @@ export default function Shop() {
 
                 setLoading(false)
                 setError(null)
-                setItemsArr(shopItems)
 
+                updateData({ shop: shopItems })
                 console.log("== 5 Items: ", shopItems)
             } catch (err) {
                 if (err.name == "AbortError") {
@@ -81,10 +81,10 @@ export default function Shop() {
             }
         }
 
-        if (itemsArr.length == 0) {
+        if (playerData?.shop?.length === 0) {
             fetchAllItemData()
         }
-    })
+    }, [ playerData ])
 
     return (
         <div className="h-full px-6 py-3 md:px-12 md:py-6 lg:px-24 lg:py-12">
@@ -92,11 +92,15 @@ export default function Shop() {
                 <h1 className="font-silkscreen font-black text-4xl mb-2 md:mb-0 md:text-5xl lg:text-7xl text-royal-blue">
                     Shop
                 </h1>
-                <XPDisplay xpData={playerData.xp}/>
-            </div>
+                <XPDisplay xpData={playerData.xp} />
+            </div> 
             <div>
-                <p className="font-quantico text-lg md:text-xl lg:text-2xl mb-6">Purchase items with XP to multiply clicks! Items are applied automatically once purchased.</p>
-                <ItemList data={itemsArr} />
+                <p className="font-quantico text-lg md:text-xl lg:text-2xl mb-6">
+                    Purchase items with XP to multiply clicks! Items are applied
+                    automatically once purchased.
+                </p>
+                { loading && <LoadingScreen /> }
+                <ItemList data={playerData?.shop} />
             </div>
         </div>
     )
