@@ -15,7 +15,7 @@ export default function Root() {
   const onHome = location.pathname === "/home"
 
   return (
-    <div className="flex flex-col h-screen bg-mint-white">
+    <div className="flex flex-col min-h-screen bg-mint-white">
 
       <nav className="bg-royal-blue text-white flex items-center justify-between px-6 py-6">
         <NavLink

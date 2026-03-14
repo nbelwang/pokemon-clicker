@@ -12,7 +12,9 @@ const DEFAULT_STATE = {
     totalClicks: 0,
     totalWildEncounters: 0,
     // TODO: add more stats
-  }
+  },
+  shop: [],
+  item: []
 }
 
 export function loadData() {
