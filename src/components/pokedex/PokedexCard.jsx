@@ -33,7 +33,7 @@ export default function PokedexCard(props) {
           {props.isCaught && props.id && (
             <button
               onClick={handleRemoveClick}
-              className="absolute top-3 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors z-10"
+              className="absolute top-3.5 right-3 text-powder-blue cursor-pointer hover:text-salmon transition-colors z-10"
               title="Remove from inventory"
             >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,7 +44,7 @@ export default function PokedexCard(props) {
         <img
           src={props.frontSprite}
           alt={props.name}
-          className="w-24 h-24 mr-3 bg-powder-blue"
+          className="w-24 h-24 mr-3 bg-powder-blue rounded-lg"
         />
         <div className="font-quantico text-sm flex flex-col gap-1">
           <h2 className="font-press-start text-sm text-dark-gray uppercase">{props.name}</h2>
