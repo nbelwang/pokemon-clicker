@@ -6,14 +6,12 @@ import LoadingScreen from "../components/LoadingScreen"
 
 export default function Shop() {
     const { playerData, updateData } = useOutletContext()
-
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
 
+    // Modify these to adjust what multipliers and costs should be assigned to shop items
     const multipliers = [1.5, 2, 2.5, 4, 5]
-    const costs = [1000, 2000, 3000, 4000, 5000]
+    const costs = [50, 100, 150, 200, 300]
 
-    // TODO: Set up an effect that triggers once data is pulled
     useEffect(() => {
         async function fetchItemData(itemName) {
             const res = await fetch(
@@ -52,6 +50,7 @@ export default function Shop() {
                     id: item.id,
                     name: item.name,
                     sprite: item.sprites.default,
+                    boughtStatus: false,
                 }))
 
                 // Grab 5 "random" items from filtered list
@@ -67,24 +66,22 @@ export default function Shop() {
                 }))
 
                 setLoading(false)
-                setError(null)
 
                 updateData({ shop: shopItems })
-                console.log("== 5 Items: ", shopItems)
             } catch (err) {
                 if (err.name == "AbortError") {
                     console.log("HTTP request was cancelled.")
                 } else {
                     console.error(err)
-                    setError(err)
                 }
             }
         }
 
+        // Only query API for items if the shop is not "set up"
         if (playerData?.shop?.length === 0) {
             fetchAllItemData()
         }
-    }, [ playerData ])
+    }, [playerData])
 
     return (
         <div className="h-full px-6 py-3 md:px-12 md:py-6 lg:px-24 lg:py-12">
@@ -93,13 +90,14 @@ export default function Shop() {
                     Shop
                 </h1>
                 <XPDisplay xpData={playerData.xp} />
-            </div> 
+            </div>
             <div>
                 <p className="font-quantico text-lg md:text-xl lg:text-2xl mb-6">
                     Purchase items with XP to multiply clicks! Items are applied
-                    automatically once purchased.
+                    automatically once purchased. Note that multipliers do NOT
+                    stack.
                 </p>
-                { loading && <LoadingScreen /> }
+                {loading && <LoadingScreen />}
                 <ItemList data={playerData?.shop} />
             </div>
         </div>

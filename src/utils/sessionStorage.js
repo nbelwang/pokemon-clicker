@@ -3,7 +3,7 @@ const KEY = 'pokemonClicker'
 const DEFAULT_STATE = {
   pokemon: [],
   xp: 0,
-  itemMultiplier: 1000,
+  itemMultiplier: 1,
   levelsUnlocked: 1,
   stats: {
     employment: "Unemployed",
@@ -14,7 +14,7 @@ const DEFAULT_STATE = {
     // TODO: add more stats
   },
   shop: [],
-  items: []
+  item: []
 }
 
 export function loadData() {
