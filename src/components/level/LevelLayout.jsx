@@ -49,7 +49,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   // watch for timeout 
   useEffect(() => {
     if (timeLeft <= 0 && battleState?.status === "fighting") {
-      const { battleState: newState, resetTime } = handleTimeout(battleState, initialTime);
+      const { battleState: newState, resetTime } = handleTimeout(battleState, initialTime, isBossLevel);
       setBattleState(newState);
       setTimeLeft(resetTime);
     }

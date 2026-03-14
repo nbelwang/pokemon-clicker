@@ -119,7 +119,7 @@ export const wildPokemonAttack = (state, typeMap) => {
     return processCaughtState(next);
 };
 
-export const handleTimeout = (state, initialTime) => {
+export const handleTimeout = (state, initialTime, isBossLevel = false) => {
     if (!state) return { state, resetTime: initialTime };
 
     const nextWildIndex = state.activeWildIndex + 1;
@@ -128,7 +128,9 @@ export const handleTimeout = (state, initialTime) => {
     const newState = {
         ...state,
         activeWildIndex: isFinished ? state.activeWildIndex : nextWildIndex,
-        status: isFinished ? "finished" : state.status,
+        status: isFinished
+            ? (isBossLevel ? "failed" : "finished")
+            : state.status,
     };
 
     return { battleState: newState, resetTime: initialTime };
