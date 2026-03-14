@@ -4,7 +4,7 @@ export default function Stats() {
     const { playerData } = useOutletContext()
 
     return (
-      <div className="h-full p-4 sm:p-6 md:p-10 lg:p-20">
+      <div className="h-full p-6 sm:p-6 md:p-10 lg:p-20 lg:px-40">
         <h1 className="font-silkscreen font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-royal-blue mb-4">
           Stats
         </h1>

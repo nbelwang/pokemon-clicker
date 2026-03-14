@@ -9,11 +9,11 @@ export default function HomeLayout() {
   const { playerData } = useOutletContext()
 
   return (
-    <div className="h-full p-4 sm:p-6 md:p-10 lg:p-20 flex flex-col items-center text-center">
+    <div className="h-full p-4 sm:p-6 md:p-10 lg:p-40 flex flex-col items-center text-center">
       <h1 className="font-silkscreen font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-royal-blue mb-4">
         Select Level
       </h1>
-      <p className="font-quantico text-sm sm:text-base md:text-lg text-dark-gray tracking-wider mb-6">
+      <p className="font-quantico text-sm sm:text-base md:text-lg text-dark-gray mb-6">
         Collect pokémon and advance through the levels to beat the final boss!
       </p>
 

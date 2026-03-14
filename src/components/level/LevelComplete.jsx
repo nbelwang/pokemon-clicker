@@ -15,7 +15,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
 
     let mainMessage;
     if (hasDefeatedBoss) {
-        mainMessage = "Wow! you defeated Hess! You acquired: his job";
+        mainMessage = "Wow! you defeated Hess!";
     } else if (isFailed && isBossLevel) {
         mainMessage = "You could not defeat Hess";
     } else if (isFailed) {
@@ -27,10 +27,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     }
 
     let buttonText, buttonLink;
-    if (hasDefeatedBoss) {
-        buttonText = "stats";
-        buttonLink = "/home/stats";
-    } else if (isFailed) {
+    if (isFailed) {
         buttonText = "retry";
         buttonLink = `/home/level/${levelNumber}`;
     } else {
@@ -38,21 +35,15 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
         buttonLink = `/home/level/${nextLevel}`;
     }
 
-     const buttonStyle = status === "failed" || isInventoryEmpty
-        ? "bg-yellow"           
-        : hasDefeatedBoss
-            ? "bg-slate-blue"     
-            : nextLevel === 5
-            ? "bg-salmon"        
-            : "bg-yellow";       
-
     return(
         <div className="flex flex-col flex-1 items-center gap-3 bg-cover bg-center"
                  style={{ backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`}}>
         
-            <div className="flex flex-col gap-5 border-6 mt-35 p-10 w-100 border-royal-blue rounded-xl bg-white text-center">
+            <div className={`flex flex-col gap-5 border-6 mt-35 p-10 w-100 border-royal-blue rounded-xl
+                            ${hasDefeatedBoss ? "bg-black" : "bg-white"}`}>
             
-            <p className='font-quantico font-bold text-xl tracking-widest'>
+            <p  className={`font-quantico font-bold text-center text-xl tracking-widest 
+                            ${hasDefeatedBoss ? "text-white" : "text-black"}`}>
                 {mainMessage}
             </p>
 
@@ -62,25 +53,38 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
                 </p>
             )}
 
+            {!hasDefeatedBoss ? (
+                <NavLink
+                    to={buttonLink}
+                    onClick={(e) => {
+                        if (isFailed) {
+                            e.preventDefault();
+                            navigate(0); // refresh page on retry
+                        }
+                    }}
+                    className={`rounded-lg flex flex-col items-center p-4 hover:brightness-95 transition-all 
+                                ${nextLevel === 5 ? "bg-salmon" : "bg-yellow"}`}
+                >
+                    <p className='font-silkscreen'>{buttonText}</p>
+                </NavLink>
+            ) : (
+                <div className="flex flex-col items-center w-full">
+                    <p className='font-silkscreen text-yellow pb-2'>you acquired</p>
+                    <p className='font-quantico text-white text-center border-4 border-yellow rounded-lg p-4 w-full'> 
+                        His job. 
+                    </p>
+                </div>
+            )}
+            
+            
             <NavLink
-                to={buttonLink}
-                onClick={(e) => {
-                    if (isFailed) {
-                        e.preventDefault();
-                        navigate(0); // refresh page on retry
-                    }
-                }}
-                className={`rounded-lg flex flex-col items-center p-4 hover:brightness-95 transition-all ${buttonStyle}`}>
+                to={hasDefeatedBoss ? "/home/stats" : "/home"}
+                className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-90"
+                >
                 <p className='font-silkscreen'>
-                    {buttonText}
+                    {hasDefeatedBoss ? "stats" : "home"}
                 </p>
             </NavLink>
-
-            {!hasDefeatedBoss && (
-                <NavLink to="/home" className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-95">
-                    <p className='font-silkscreen'>Home</p>
-                </NavLink>
-            )}
 
             </div>
 
