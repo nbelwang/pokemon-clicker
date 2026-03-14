@@ -41,7 +41,7 @@ export default function PokedexSearch({ onSelect, className = '' }) {
 
   return (
     <div className={`p-6 w-full h-full flex flex-col ${className}`}>      
-      <h1 className="font-press-start text-2xl text-royal-blue mb-6">Pokedex</h1>
+      <h1 className="font-silkscreen font-bold sm:text-3xl md:text-4xl lg:text-5xl text-royal-blue mb-6">POKÉDEX</h1>
       <div className="flex gap-2 mb-6 shrink-0">
         <input
           value={query}
