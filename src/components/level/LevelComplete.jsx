@@ -36,8 +36,12 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     }
 
     return(
-        <div className="flex flex-col flex-1 items-center gap-3 bg-cover bg-center"
-                 style={{ backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`}}>
+         <div className="relative flex flex-col flex-1 gap-3 items-center"
+            style={{
+                backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`,
+                backgroundSize: isBossLevel ? "cover" : "120%",
+                backgroundPosition: isBossLevel ? "center" : "bottom center",
+            }}>
         
             <div className={`flex flex-col gap-5 border-6 mt-35 p-10 w-100 border-royal-blue rounded-xl
                             ${hasDefeatedBoss ? "bg-black" : "bg-white"}`}>

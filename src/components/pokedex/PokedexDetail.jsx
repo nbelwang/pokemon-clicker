@@ -79,9 +79,9 @@ export default function PokedexDetail({ pokemon, className = '' }) {
     };
 
     return(
-        <div className={`w-full h-full bg-white border-[3px] border-royal-blue rounded-4xl p-8 lg:p-10 flex flex-col overflow-hidden ${className}`}>
+        <div className={`w-full bg-white border-[3px] border-royal-blue rounded-4xl p-8 lg:p-9 mt-6 flex flex-col overflow-hidden ${className}`}>
             {/* Top section with image/description */}
-            <div className="-mt-5 flex flex-col lg:flex-row gap-6 md:gap-10 mb-10 items-center lg:items-start">
+            <div className="flex flex-col lg:flex-row gap-6 md:gap-10 mb-10 items-center lg:items-start">
                 <div className="bg-[#f0f0f0] rounded-4xl w-48 h-48 md:w-56 md:h-56 flex items-center justify-center shrink-0">
                     <img
                         src={pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default}

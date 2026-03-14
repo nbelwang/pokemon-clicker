@@ -36,18 +36,20 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
 
   return (
-    <div className="relative flex flex-col flex-1 gap-3 bg-cover bg-center"
-         style={{ 
-            backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})` 
-         }}>
+    <div className="relative flex flex-col flex-1 gap-3"
+      style={{
+        backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`,
+        backgroundSize: isBossLevel ? "cover" : "120%",
+        backgroundPosition: isBossLevel ? "center" : "bottom center",
+      }}>
 
       <p className='font-silkscreen text-white p-3'>encounter: {encounter}</p>
 
       {battleActive && (
-        <div className='flex flex-col flex-1 items-center pt-2 relative'>
+        <div className='flex flex-col flex-1 items-center justify-center relative'>
 
         {showEffective && (
-          <p className="absolute -top-7 font-silkscreen text-xl text-yellow animate-bounce">
+          <p className="absolute -top-4 font-silkscreen text-xl text-yellow animate-bounce">
             Effective!
           </p>
         )}
