@@ -8,7 +8,7 @@ export default function ReleaseModal({ pokemonName, onConfirm, onCancel }) {
         className="bg-white rounded-xl p-6 max-w-sm w-full mx-auto flex flex-col items-center text-center shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="font-press-start text-sm text-dark-gray mb-4 leading-6">
+        <h3 className="font-silkscreen text-2xl text-dark-gray mb-4 leading-6">
           Release {pokemonName}?
         </h3>
         <p className="font-quantico text-sm text-dark-gray mb-6">

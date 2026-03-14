@@ -27,13 +27,13 @@ export default function PokedexCard(props) {
   return (
     <>
       <div
-        className={`relative bg-white border border-powder-blue rounded-xl p-6 w-80 flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
+        className={`relative bg-white border border-powder-blue rounded-xl p-4 w-75 flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
         onClick={props.onClick}
       >
           {props.isCaught && props.id && (
             <button
               onClick={handleRemoveClick}
-              className="absolute top-4 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors z-10"
+              className="absolute top-3 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors z-10"
               title="Remove from inventory"
             >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -44,20 +44,20 @@ export default function PokedexCard(props) {
         <img
           src={props.frontSprite}
           alt={props.name}
-          className="w-24 h-24 mr-5 bg-powder-blue"
+          className="w-24 h-24 mr-3 bg-powder-blue"
         />
         <div className="font-quantico text-sm flex flex-col gap-1">
           <h2 className="font-press-start text-sm text-dark-gray uppercase">{props.name}</h2>
+          <p><span className="font-bold">HP:</span> {props.stats[0].base_stat}</p>
           <p><span className="font-bold">ATK:</span> {props.stats[1].base_stat}</p>
           <p>
               <span className="font-bold">Type: </span>
               {props.types.map(t => (
-              <span key={t.type.name} className="bg-slate-blue text-dark-gray px-2 py-0.5 rounded mr-1 text-xs">
+              <span key={t.type.name} className="bg-powder-blue text-dark-gray px-1 py-0.2 rounded mr-1 text-xs">
                   {t.type.name}
               </span>
               ))}
           </p>
-          <p><span className="font-bold">HP:</span> {props.stats[0].base_stat}</p>
         </div>
       </div>
 
