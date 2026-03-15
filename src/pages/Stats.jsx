@@ -36,7 +36,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Total XP Earned</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">TODO</p>
+            <p className="text-sm sm:text-xl font-quantico">{playerData.stats?.totalXPEarned ?? 0}</p>
             </div>
           </div>
 
@@ -45,7 +45,7 @@ export default function Stats() {
               <p className="text-sm sm:text-xl font-quantico truncate">Total XP Spent</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-sm sm:text-xl font-quantico">TODO</p>
+            <p className="text-sm sm:text-xl font-quantico">{playerData.stats?.totalXPSpent ?? 0}</p>
             </div>
           </div>
 
