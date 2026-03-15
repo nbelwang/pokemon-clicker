@@ -24,14 +24,18 @@ export default function ItemList({ data }) {
                 shopItem.name === itemName ? { ...shopItem, boughtStatus: true } : shopItem
             )
 
-            // Update player's multiplier, remaining XP, shop, and new item
+            // Update player's multiplier, remaining XP, shop, new item, and total XP spent
             const updatedPlayerData = {
                 ...playerData,
                 itemMultiplier: item.mult,
                 xp: playerData.xp - item.cost,
                 shop: updatedShop,
-                item: [item]
-            } 
+                item: [item],
+                stats: {
+                    ...playerData.stats,
+                    totalXPSpent: (playerData.stats?.totalXPSpent ?? 0) + item.cost
+                }
+            }
 
             updateData(updatedPlayerData)
 

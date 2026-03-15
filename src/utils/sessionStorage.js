@@ -11,7 +11,8 @@ const DEFAULT_STATE = {
     totalDamageDealt: 0,
     totalClicks: 0,
     totalWildEncounters: 0,
-    // TODO: add more stats
+    totalXPEarned: 0,
+    totalXPSpent: 0,
   },
   shop: [],
   item: []
