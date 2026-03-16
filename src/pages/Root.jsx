@@ -26,7 +26,7 @@ export default function Root() {
         </NavLink>
       </nav>
 
-      <div className="flex flex-col flex-1 min-h-0">
+      <div className="flex flex-col flex-1 min-h-0 overflow-y-auto">
         <Outlet context={{ playerData, updateData }} />
       </div>
 

@@ -133,7 +133,8 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
             ...playerData.stats,
             pokemonCaught: (playerData.stats?.pokemonCaught ?? 0) + newCaught,
             totalWildEncounters: (playerData.stats?.totalWildEncounters ?? 0) + battleState.wild.length,
-            totalClicks: (playerData.stats?.totalClicks ?? 0) + clicksThisBattleRef.current
+            totalClicks: (playerData.stats?.totalClicks ?? 0) + clicksThisBattleRef.current,
+            totalXPEarned: (playerData.stats?.totalXPEarned ?? 0) + battleState.gainedXP
           }
         };
 

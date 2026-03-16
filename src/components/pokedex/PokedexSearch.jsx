@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 
 import PokedexCard from './PokedexCard'
 
-export default function PokedexSearch({ onSelect, className = '' }) {
+export default function PokedexSearch({ onSelect }) {
   const { playerData } = useOutletContext()
   const [query, setQuery] = useState('')
   const [inventoryPokemon, setInventoryPokemon] = useState([])
@@ -40,14 +40,13 @@ export default function PokedexSearch({ onSelect, className = '' }) {
   )
 
   return (
-    <div className={`p-6 w-full h-full flex flex-col ${className}`}>      
-      <h1 className="font-silkscreen font-bold sm:text-3xl md:text-4xl lg:text-5xl text-royal-blue mb-6">POKÉDEX</h1>
-      <div className="flex gap-2 mb-6 shrink-0">
+    <div className="flex flex-col gap-y-6">      
+      <div>
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Search caught Pokemon..."
-          className="bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-full focus:outline-none focus:border-royal-blue "
+          className="text-md lg:text-lg bg-white border border-powder-blue rounded px-3 py-2 font-quantico w-full focus:outline-none focus:border-royal-blue "
         />
       </div>
 
@@ -58,7 +57,7 @@ export default function PokedexSearch({ onSelect, className = '' }) {
         <p className="text-gray-500 font-quantico mb-4">No Pokemon caught yet!</p>
       )}
 
-      <div className="flex flex-row flex-wrap gap-4 overflow-y-auto min-h-0 flex-1 justify-center content-start">
+      <div className="flex flex-row flex-wrap gap-y-4 gap-x-2 overflow-y-auto justify-start content-start w-full">
         {filteredPokemon.map(p => (
           <PokedexCard
             key={p.id}
@@ -72,7 +71,7 @@ export default function PokedexSearch({ onSelect, className = '' }) {
           />
         ))}
         {!loading && inventoryPokemon.length > 0 && filteredPokemon.length === 0 && query && (
-          <p className="text-salmon font-quantico mb-4">No caught Pokemon found matching "{query}"</p>
+          <p className="text-salmon font-quantico font-black mb-4">No caught Pokemon found matching "{query}"!</p>
         )}
       </div>
     </div>

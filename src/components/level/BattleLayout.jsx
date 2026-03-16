@@ -4,6 +4,7 @@ import { motion } from "motion/react"
 import bgImage from '../../assets/background.png'
 import spaceBg from '../../assets/spaceBg.jpg'
 import LevelComplete from './LevelComplete'
+import StatDisplay from './StatDisplay'
 
 export default function BattleLayout({ pokemon, attack, status, encounter, playerCaughtNewPokemon, tempXP, showEffective }) {
   const { levelNumber } = useParams()
@@ -82,12 +83,10 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
       )}
 
       {/* xp and multiplier */}
-      <div>
-        <p className='font-quantico absolute bottom-4 right-4'>
-          XP: {tempXP}
-        </p>
-      </div>
-     
+      { battleActive && 
+        <StatDisplay tempXP={tempXP}/>
+      }
+
     </div>
   )
 }
