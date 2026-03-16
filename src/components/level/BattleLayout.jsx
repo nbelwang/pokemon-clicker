@@ -40,50 +40,54 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
       {battleActive && (
         <div className='flex flex-col flex-1 items-center justify-center relative'>
 
-        <AnimatePresence>
-          {showEffective && (
-            <motion.p
-              key="effective"
-              className="absolute top-3 font-silkscreen text-xl text-yellow"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1.1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              Effective!
-            </motion.p>
-          )}
-        </AnimatePresence>
+       <div className="relative flex flex-col items-center">
+            {/* effective! */}
+            <AnimatePresence>
+              {showEffective && (
+                <motion.p
+                  key="effective"
+                  className="absolute -top-10 left-1/2 -translate-x-1/2 font-silkscreen text-xl text-yellow"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1.1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  Effective!
+                </motion.p>
+              )}
+            </AnimatePresence>
 
-        {/* nametag */}
-        <AnimatePresence mode="wait">
-          {pokemon && (
-            <motion.div
-              key={pokemon.id} 
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="border-3 border-dark-gray rounded-lg p-2 mb-4 bg-white"
-            >
-              <h1 className="font-silkscreen text-3xl mb-1">{pokemon.name}</h1>
-              <div className="flex items-end justify-between mb-1 mr-1">
-                <p className="font-quantico">Type: {isBossLevel ? "Human" : pokemon.types.join(", ")}</p>
-                <p className="font-quantico">{pokemon.hp.toFixed(1)} / {pokemon.maxHp}</p>
-              </div>
-              <div className="flex items-center w-110 p-1 h-7 bg-dark-gray rounded">
-                <p className="font-quantico font-bold text-yellow pr-1">HP </p>
-                <div className="w-full rounded bg-white">
-                  <div
-                    className="bg-salmon rounded h-5"
-                    style={{ width: `${hpPercent}%` }}
-                  />
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            {/* nametag */}
+            <AnimatePresence mode="wait">
+              {pokemon && (
+                <motion.div
+                  key={pokemon.id} 
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                  className="border-3 border-dark-gray rounded-lg p-2 mb-4 bg-white relative"
+                >
+                  <h1 className="font-silkscreen text-3xl mb-1">{pokemon.name}</h1>
+                  <div className="flex items-end justify-between mb-1 mr-1">
+                    <p className="font-quantico">Type: {isBossLevel ? "Human" : pokemon.types.join(", ")}</p>
+                    <p className="font-quantico">{pokemon.hp.toFixed(1)} / {pokemon.maxHp}</p>
+                  </div>
+                  <div className="flex items-center w-110 p-1 h-7 bg-dark-gray rounded">
+                    <p className="font-quantico font-bold text-yellow pr-1">HP </p>
+                    <div className="w-full rounded bg-white">
+                      <div
+                        className="bg-salmon rounded h-5"
+                        style={{ width: `${hpPercent}%` }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
+         {/* pokemon sprite */}
         <AnimatePresence mode="wait">
           <motion.img
             key={pokemon.id}
