@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import ItemList from "../components/shop/ItemList"
-import XPDisplay from "../components/shop/xpDisplay"
+import XPDisplay from "../components/shop/XPDisplay"
 import LoadingScreen from "../components/LoadingScreen"
 
 export default function Shop() {

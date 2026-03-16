@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom"
-import XPDisplay from "../shop/xpDisplay"
+import XPDisplay from "../shop/XPDisplay"
 
 export default function StatDisplay({tempXP}) {
     const { playerData } = useOutletContext()
