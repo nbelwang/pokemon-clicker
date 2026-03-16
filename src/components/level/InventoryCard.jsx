@@ -20,10 +20,10 @@ export default function InventoryCard({pokemon, index, activeCaughtIndex, setAct
       onClick={handleClick}
     >
 
-      <img className="h-30 w-30" src={pokemon.sprite} alt={pokemon.name} />
+      <img className="h-35 w-35" src={pokemon.sprite} alt={pokemon.name} />
       
-      <div className="flex flex-col w-full gap-2 mt-3 mr-1">
-        <p className="font-silkscreen text-lg">{pokemon.name}</p>
+      <div className="flex flex-col w-full gap-2 mt-5 mr-1">
+        <p className="font-silkscreen text-xl">{pokemon.name}</p>
 
         <div className="flex items-end justify-between">
           <p className="font-quantico">Type: {pokemon.types.join(", ")}</p>

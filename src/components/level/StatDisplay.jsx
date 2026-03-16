@@ -10,8 +10,8 @@ export default function StatDisplay({tempXP}) {
         <div className="absolute bottom-4 right-4">
             {item.length != 0 && (
                 <div className="flex flex-col items-end mb-2">
-                    <img src={item[0].sprite} alt={playerData.item.name} className="w-20"></img>
-                    <p className="font-quantico font-bold text-royal-blue text-xl">{playerData.itemMultiplier}x Multiplier</p>
+                    <img src={item[0].sprite} alt={playerData.item.name} className="w-15"></img>
+                    <p className="font-quantico font-bold text-yellow text-lg">{playerData.itemMultiplier}x Multiplier</p>
                 </div>
             )}
             <XPDisplay xpData={tempXP} />

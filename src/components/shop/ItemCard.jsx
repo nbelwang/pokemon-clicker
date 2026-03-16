@@ -20,7 +20,7 @@ export default function ItemCard(props) {
     if(props.itemBought && betterMult){
         bgColor = "bg-cream"    // Cream background if item is bought
     } else if(!betterMult) {
-        bgColor = "bg-salmon"   // Salmon background if item multiplier is worse than current one (waste of XP)
+        bgColor = "bg-powder-blue"  // Greyed background if item multiplier is worse than current one (waste of XP)
     } else {
         bgColor = "bg-white"    // Default background
     }

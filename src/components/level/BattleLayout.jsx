@@ -51,13 +51,13 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
         <div className='flex flex-col flex-1 items-center justify-center relative'>
 
         {showEffective && (
-          <p className="absolute -top-4 font-silkscreen text-xl text-yellow animate-bounce">
+          <p className="absolute top-3 font-silkscreen text-xl text-yellow animate-bounce">
             Effective!
           </p>
         )}
 
         {/* nametag */}
-        <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
+        <div className="border-3 border-dark-gray rounded-lg p-2 mb-4 bg-white">
           <h1 className="font-silkscreen text-3xl mb-1">{pokemon.name}</h1>
           <div className="flex items-end justify-between mb-1 mr-1">
             <p className="font-quantico">Type: {isBossLevel ? "Human" : pokemon.types.join(", ")}</p>

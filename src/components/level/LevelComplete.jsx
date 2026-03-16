@@ -6,6 +6,7 @@ import spaceBg from '../../assets/spaceBg.jpg'
 export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     const navigate = useNavigate();
     const { levelNumber } = useParams()
+    const prevLevel = Number(levelNumber) - 1
     const nextLevel = Number(levelNumber) + 1
     const isBossLevel = Number(levelNumber) === 5; 
 
@@ -43,7 +44,7 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
                 backgroundPosition: isBossLevel ? "center" : "bottom center",
             }}>
         
-            <div className={`flex flex-col gap-5 border-6 mt-35 p-10 w-100 border-royal-blue rounded-xl
+            <div className={`flex flex-col gap-5 border-6 mt-20 lg:mt-45 p-10 w-100 border-royal-blue rounded-xl
                             ${hasDefeatedBoss ? "bg-black" : "bg-white"}`}>
             
             <p  className={`font-quantico font-bold text-center text-xl tracking-widest 
@@ -80,16 +81,25 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
                 </div>
             )}
             
-            
-            <NavLink
-                to={hasDefeatedBoss ? "/home/stats" : "/home"}
-                className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-90"
-                >
-                <p className='font-silkscreen'>
-                    {hasDefeatedBoss ? "stats" : "home"}
-                </p>
-            </NavLink>
-
+            {Number(levelNumber) !== 1 ? (
+                <NavLink
+                    to={hasDefeatedBoss ? "/home/stats" : `/home/level/${prevLevel}`}
+                    className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-90"
+                    >
+                    <p className='font-silkscreen'>
+                        {hasDefeatedBoss ? "stats" : "< prev level"}
+                    </p>
+                </NavLink>
+            ) : (
+                <NavLink
+                    to="/home"
+                    className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-90"
+                    >
+                    <p className='font-silkscreen'>
+                        home
+                    </p>
+                </NavLink>
+            )}
             </div>
 
         </div>

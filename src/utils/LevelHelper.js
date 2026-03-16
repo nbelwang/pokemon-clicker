@@ -60,7 +60,7 @@ export const playerAttack = (state, levelNumber, clickMultiplier) => {
     const wild = [...next.wild];
     const target = { ...wild[next.activeWildIndex] };
 
-    target.hp -= 0.2 * clickMultiplier;
+    target.hp -= 0.3 * clickMultiplier;
     wild[next.activeWildIndex] = target;
     next.wild = wild;
 
