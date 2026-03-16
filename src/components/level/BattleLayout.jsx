@@ -16,8 +16,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
     if (status === "finished" || status === "failed") {
       const timer = setTimeout(() => {
         setShowResult(true);
-      }, 2000); // 2 second delay
-
+      }, 1700); 
       return () => clearTimeout(timer);
     }
   }, [status]);
@@ -94,11 +93,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
 
             initial={{ y: 200, opacity: 0 }}
             animate={{ y: 0, opacity: 1, scale: wildPulse ? 0.93 : 1 }}
-            exit={
-              isBossLevel
-                ? { rotate: 720, scale: 0, opacity: 0 } 
-                : { y: 200, opacity: 0 }               
-            }
+            exit={{ y: 200, opacity: 0 }}
 
             whileTap={{ scale: 0.9 }}
 
