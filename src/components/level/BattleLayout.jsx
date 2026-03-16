@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from "motion/react"
 import bgImage from '../../assets/background.png'
-import spaceBg from '../../assets/spaceBg.jpg'
+import spaceBg from '../../assets/spacebg.jpg'
 import LevelComplete from './LevelComplete'
 import StatDisplay from './StatDisplay'
 
