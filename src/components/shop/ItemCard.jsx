@@ -32,7 +32,7 @@ export default function ItemCard(props) {
         <>
             <div className="flex flex-col items-center">
                 <div
-                    className={`flex flex-col items-center space-y-2 w-3xs md:w-2xs py-4 ${bgColor} border-4 border-royal-blue rounded-xl lg:p-4`}
+                    className={`flex flex-col items-center space-y-2 w-3xs py-4 ${bgColor} border-4 border-royal-blue rounded-xl lg:p-4`}
                 >
                     <h2 className="flex items-center capitalize text-center font-silkscreen text-xl md:text-2xl lg:text-3xl mb-2 h-12 md:h-16 lg:h-20 overflow-hidden">
                         {formattedName}
