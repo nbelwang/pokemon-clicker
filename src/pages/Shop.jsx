@@ -10,7 +10,7 @@ export default function Shop() {
 
     // Modify these to adjust what multipliers and costs should be assigned to shop items
     const multipliers = [1.25, 1.5, 2, 4, 5]
-    const costs = [30, 200, 350, 450, 700]
+    const costs = [20, 200, 300, 450, 700]
 
     useEffect(() => {
         async function fetchItemData(itemName) {
