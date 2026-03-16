@@ -14,7 +14,7 @@ export default function Stats() {
           {/* Row 1 */}
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold ">Job</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Job</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-fit">
               <p className="text-md md:text-lg lg:text-xl font-quantico whitespace-nowrap">{playerData.stats.employment}</p>
@@ -24,7 +24,7 @@ export default function Stats() {
           {/* Row 2 */}
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold ">Total Clicks</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Total Clicks</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-fit">
               <p className="text-md md:text-lg lg:text-xl font-quantico whitespace-nowrap">{playerData.stats?.totalClicks ?? 0}</p>
@@ -33,7 +33,7 @@ export default function Stats() {
 
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold ">Total XP Earned</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Total XP Earned</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-0">
             <p className="text-md md:text-lg lg:text-xl font-quantico">{playerData.stats?.totalXPEarned ?? 0}</p>
@@ -42,7 +42,7 @@ export default function Stats() {
 
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold ">Total XP Spent</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Total XP Spent</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-0">
             <p className="text-md md:text-lg lg:text-xl font-quantico">{playerData.stats?.totalXPSpent ?? 0}</p>
@@ -51,7 +51,7 @@ export default function Stats() {
 
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-b border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold">Pokemon Caught</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Pokemon Caught</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-b border-royal-blue group-hover:bg-cream min-w-0">
               <p className="text-md md:text-lg lg:text-xl font-quantico">{playerData.stats?.pokemonCaught ?? 0}</p>
@@ -60,7 +60,7 @@ export default function Stats() {
 
           <div className="contents group">
             <div className="bg-white p-3 sm:p-6 border-r border-royal-blue group-hover:bg-cream min-w-0">
-              <p className="text-md md:text-lg lg:text-xl font-quantico font-bold">Wild Pokemon Encounters</p>
+              <p className="text-md md:text-lg lg:text-xl font-quantico">Wild Pokemon Encounters</p>
             </div>
             <div className="bg-white p-3 sm:p-6 text-right border-royal-blue group-hover:bg-cream min-w-0">
               <p className="text-md md:text-lg lg:text-xl font-quantico">{playerData.stats?.totalWildEncounters ?? 0}</p>

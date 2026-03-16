@@ -59,7 +59,7 @@ export default function PokedexDetail({ pokemon }) {
     if (!pokemon) {
         return (
             <div className="h-full border-[3px] border-royal-blue rounded-4xl bg-white flex flex-col items-center justify-center px-8 py-12 md:p-8">
-                <p className="text-gray-500 font-quantico text-xl">
+                <p className="text-dark-gray font-quantico text-xl">
                     No Pokemon selected
                 </p>
             </div>
@@ -123,7 +123,7 @@ export default function PokedexDetail({ pokemon }) {
                         {pokemon.name}
                     </h2>
                     {pokemonDetails && (
-                        <p className="font-quantico textx-lg lg:text-xl text-left">
+                        <p className="font-quantico textx-lg lg:text-xl text-left text-dark-gray">
                             {pokemonDetails.flavor_text_entries
                                 .find((e) => e.language.name === "en")
                                 ?.flavor_text.replace(/\n|\f/g, " ")}

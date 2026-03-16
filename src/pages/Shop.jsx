@@ -85,7 +85,7 @@ export default function Shop() {
 
     return (
         <div className="h-full px-6 py-12 md:px-12 lg:px-24 pb-24">
-            <div className="flex flex-row justify-between items-center mb-6">
+            <div className="flex flex-row justify-between items-start mb-6">
                 <h1 className="font-silkscreen font-black text-3xl mb-2 md:mb-0 md:text-4xl lg:text-5xl text-royal-blue">
                     Shop
                 </h1>
