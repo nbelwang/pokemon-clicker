@@ -58,7 +58,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
 
         {/* nametag */}
         <div className="border-3 border-dark-gray rounded-lg p-2 mb-2 bg-white">
-          <h1 className="font-silkscreen text-2xl mb-1">{pokemon.name}</h1>
+          <h1 className="font-silkscreen text-3xl mb-1">{pokemon.name}</h1>
           <div className="flex items-end justify-between mb-1 mr-1">
             <p className="font-quantico">Type: {isBossLevel ? "Human" : pokemon.types.join(", ")}</p>
             <p className="font-quantico">{pokemon.hp.toFixed(1)} / {pokemon.maxHp}</p>
@@ -76,7 +76,7 @@ export default function BattleLayout({ pokemon, attack, status, encounter, playe
 
         <img
           src={pokemon.sprite}
-          className="cursor-pointer h-110"
+          className="cursor-pointer h-120"
           onClick={attack}
         />
       </div>

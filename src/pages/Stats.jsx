@@ -4,7 +4,7 @@ export default function Stats() {
     const { playerData } = useOutletContext()
 
     return (
-      <div className="h-full px-6 py-12 md:px-12 lg:px-24 pb-24">
+      <div className="h-full px-6 py-12 md:px-12 lg:px-50 lg:py-25 pb-24">
         <h1 className="font-silkscreen font-black text-3xl mb-6 md:text-4xl lg:text-5xl text-royal-blue">
           Stats
         </h1>
