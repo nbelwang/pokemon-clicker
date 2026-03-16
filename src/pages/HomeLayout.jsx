@@ -13,8 +13,11 @@ export default function HomeLayout() {
       <h1 className="font-silkscreen font-black text-3xl mb-6 md:text-4xl lg:text-5xl text-royal-blue">
         Select Level
       </h1>
+      <p className="font-quantico text-dark-gray text-lg lg:text-xl">
+        Collect pokemon and advance through the levels to beat the final boss!
+      </p>
       <p className="font-quantico text-dark-gray text-lg lg:text-xl mb-12">
-        Collect pokémon and advance through the levels to beat the final boss!
+        You can always return to previous levels to catch more pokemon.
       </p>
 
       <div className="text-2xl md:text-3xl flex flex-wrap gap-4 md:gap-6 mb-12">

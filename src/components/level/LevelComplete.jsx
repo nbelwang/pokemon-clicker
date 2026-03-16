@@ -1,5 +1,9 @@
 import { NavLink, useNavigate} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import homeImage from '../../assets/home.svg'
+import pokeballImage from '../../assets/pokeball.svg'
+import shopImage from '../../assets/shop.svg'
+import statsImage from '../../assets/stats.svg'
 
 export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     const navigate = useNavigate();
@@ -51,6 +55,42 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
                 </p>
             )}
 
+            {!hasDefeatedBoss && (
+                <div className="flex flex-row gap-10 justify-center mt-2">
+                    <NavLink 
+                        to="/home" 
+                        className="flex flex-col items-center hover:brightness-90" 
+                        title="Go to Home"
+                    >
+                        <img src={homeImage} alt="Home" className="w-10 h-10" />
+                    </NavLink>
+
+                    <NavLink 
+                        to="/home/pokedex" 
+                        className="flex flex-col items-center hover:brightness-90" 
+                        title="View Pokedex"
+                    >
+                        <img src={pokeballImage} alt="Pokeball" className="w-10 h-10" />
+                    </NavLink>
+
+                    <NavLink 
+                        to="/home/shop" 
+                        className="flex flex-col items-center hover:brightness-90" 
+                        title="Go to Shop"
+                    >
+                        <img src={shopImage} alt="Shop" className="w-10 h-10" />
+                    </NavLink>
+
+                    <NavLink 
+                        to="/home/stats" 
+                        className="flex flex-col items-center hover:brightness-90" 
+                        title="View Stats"
+                    >
+                        <img src={statsImage} alt="Stats" className="w-10 h-10" />
+                    </NavLink>
+                </div>
+            )}
+
             {!hasDefeatedBoss ? (
                 <NavLink
                     to={buttonLink}
@@ -85,11 +125,11 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
                 </NavLink>
             ) : (
                 <NavLink
-                    to="/home"
+                    to="/home/shop"
                     className="rounded-lg bg-slate-blue flex flex-col items-center p-4 hover:brightness-90"
                     >
                     <p className='font-silkscreen'>
-                        home
+                        shop
                     </p>
                 </NavLink>
             )}
