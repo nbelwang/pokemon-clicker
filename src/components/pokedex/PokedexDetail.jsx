@@ -134,7 +134,7 @@ export default function PokedexDetail({ pokemon }) {
 
             {/* hp/type/weaknesses */}
             <div className="flex flex-col gap-6 mb-10 font-quantico">
-                <div className="grid grid-cols-8 justify-between md:flex md:flex-col md:gap-y-2 lg:grid lg:grid-cols-8 lg:justify-between">
+                <div className="flex flex-col gap-y-2 lg:grid lg:grid-cols-8 lg:justify-between">
                     <div className="col-span-2">
                         <p className="text-md md:text-lg">
                             <strong>Base HP:</strong> {hp}
@@ -162,7 +162,7 @@ export default function PokedexDetail({ pokemon }) {
                     </div>
                 </div>
 
-                <div className="flex flex-row gap-x-2 md:flex-col md:gap-y-2 lg:flex-row lg:gap-x-2">
+                <div className="flex flex-col gap-y-2 lg:flex-row lg:gap-x-2">
                     <p className="text-md md:text-lg">
                         <strong>Weaknesses:</strong>
                     </p>
@@ -183,7 +183,7 @@ export default function PokedexDetail({ pokemon }) {
             </div>
 
             {/* 2 x 2 box of stats */}
-            <div className="bg-[#f0f0f0] rounded-2xl px-4 py-6 grid grid-cols-3 md:flex md:flex-col md:gap-y-4 lg:grid lg:grid-cols-3">
+            <div className="bg-[#f0f0f0] rounded-2xl px-4 py-6 flex flex-col gap-y-4 lg:grid lg:grid-cols-3">
                 <p className="font-quantico text-md md:text-lg">
                     <strong>Height:</strong> {feet}' {inches}"
                 </p>

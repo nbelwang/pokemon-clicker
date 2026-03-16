@@ -84,7 +84,7 @@ export default function Shop() {
     }, [playerData])
 
     return (
-        <div className="px-6 py-12 md:px-16 lg:px-24 mb-24">
+        <div className="h-full px-6 py-12 md:px-12 lg:px-24 pb-24">
             <div className="flex flex-row justify-between items-center mb-6">
                 <h1 className="font-silkscreen font-black text-3xl mb-2 md:mb-0 md:text-4xl lg:text-5xl text-royal-blue">
                     Shop
@@ -92,7 +92,7 @@ export default function Shop() {
                 <XPDisplay xpData={playerData.xp} />
             </div>
             <div>
-                <p className="font-quantico text-md md:text-lg lg:text-xl mb-6">
+                <p className="font-quantico text-lg lg:text-xl mb-6">
                     Purchase items with XP to multiply clicks! Items are applied
                     automatically once purchased. Note that multipliers do NOT
                     stack.
