@@ -27,7 +27,7 @@ export default function PokedexCard(props) {
   return (
     <>
       <div
-        className={`relative bg-white border border-powder-blue rounded-xl p-4 w-75 flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}`}
+        className="relative bg-white border border-powder-blue rounded-xl p-4 w-full md:w-xs flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}"
         onClick={props.onClick}
       >
           {props.isCaught && props.id && (
@@ -44,13 +44,13 @@ export default function PokedexCard(props) {
         <img
           src={props.frontSprite}
           alt={props.name}
-          className="w-24 h-24 mr-3 bg-powder-blue"
+          className="w-24 h-24 mr-3 bg-powder-blue rounded-2xl"
         />
-        <div className="font-quantico text-sm flex flex-col gap-1">
+        <div className="font-quantico flex flex-col gap-1">
           <h2 className="font-press-start text-sm text-dark-gray uppercase">{props.name}</h2>
-          <p><span className="font-bold">HP:</span> {props.stats[0].base_stat}</p>
-          <p><span className="font-bold">ATK:</span> {props.stats[1].base_stat}</p>
-          <p>
+          <p className="text-sm"><span className="font-bold">HP:</span> {props.stats[0].base_stat}</p>
+          <p className="text-sm"><span className="font-bold">ATK:</span> {props.stats[1].base_stat}</p>
+          <p className="text-sm">
               <span className="font-bold">Type: </span>
               {props.types.map(t => (
               <span key={t.type.name} className="bg-powder-blue text-dark-gray px-1 py-0.2 rounded mr-1 text-xs">

@@ -32,12 +32,12 @@ export default function ItemCard(props) {
         <>
             <div className="flex flex-col items-center">
                 <div
-                    className={`flex flex-col items-center space-y-2 w-3xs md:w-2xs py-4 ${bgColor} border-4 border-royal-blue rounded-xl lg:p-4`}
+                    className={`flex flex-col items-center space-y-2 w-full md:w-60 lg:w-3xs py-4 ${bgColor} border-4 border-royal-blue rounded-xl lg:p-4`}
                 >
-                    <h2 className="flex items-center capitalize text-center font-silkscreen text-xl md:text-2xl lg:text-3xl mb-2 h-12 md:h-16 lg:h-20 overflow-hidden">
+                    <h2 className="flex items-center capitalize text-center font-silkscreen font-bold text-md md:text-lg lg:text-xl mb-2 h-8 md:h-12 lg:h-16 overflow-hidden">
                         {formattedName}
                     </h2>
-                    <p className="font-quantico text-center text-md md:text-lg lg:text-xl">
+                    <p className="font-quantico text-center text-md md:text-lg">
                         {props.itemMult}x Multiplier
                     </p>
                     <img
@@ -45,14 +45,14 @@ export default function ItemCard(props) {
                         src={props.itemSprite}
                         alt={props.itemName}
                     ></img>
-                    <p className="font-silkscreen font-weight-black text-royal-blue text-md md:text-lg lg:text-xl">
+                    <p className="font-silkscreen font-bold text-royal-blue text-md md:text-lg lg:text-xl">
                         {props.itemCost} XP
                     </p>
                 </div>
-                {props.itemBought && betterMult && <p className="font-silkscreen mt-2 text-xl md:text-2xl">Applied</p>}
+                {props.itemBought && betterMult && <p className="w-full md:w-3xs font-silkscreen text-center mt-3 text-md md:text-lg text-royal-blue">Applied</p>}
                 {sufficientXp && !props.itemBought && betterMult && (
                     <button
-                        className="w-full py-3 text-center bg-green mt-2 rounded-lg font-silkscreen text-white text-xl"
+                        className="w-full md:w-60 py-3 text-center bg-green mt-3 rounded-lg font-silkscreen font-bold text-white text-md md:text-lg"
                         onClick={() => props.onBuy(props.itemName)}
                     >
                         Buy

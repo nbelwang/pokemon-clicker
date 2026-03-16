@@ -47,7 +47,7 @@ export default function ItemList({ data }) {
 
     return (
         <>
-            <div className="flex flex-row flex-wrap gap-4">
+            <div className="flex flex-col md:flex-row flex-wrap gap-x-2.5 gap-y-8">
                 {data.map((item) => (
                     <ItemCard
                         key={item.name}
