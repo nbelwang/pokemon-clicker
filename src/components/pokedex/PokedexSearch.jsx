@@ -40,7 +40,7 @@ export default function PokedexSearch({ onSelect }) {
   )
 
   return (
-    <div className="flex flex-col gap-y-6">      
+    <div className="flex flex-col gap-y-6 h-full min-h-0">      
       <div>
         <input
           value={query}
