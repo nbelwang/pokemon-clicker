@@ -6,6 +6,7 @@ import { fetchLevelPokemon, fetchTypesEffectiveAgainst } from '../utils/api'
 import LevelLayout from '../components/level/LevelLayout'
 import pokemonLevels from '../utils/pokemonLevels.json'
 import hessFace from '../assets/smilehess.png'
+import LoadingScreen from "../components/LoadingScreen"
 
 const BOSS_DATA = {
   id: 'final-boss', 
@@ -77,7 +78,7 @@ export default function Level() {
   const isTypesLoading = typeQueries.some(q => q.isLoading)
   
   if (isPokemonLoading || isTypesLoading) {
-    return <div className="p-10 font-quantico">Loading...</div>
+    return <div className="pt-20"><LoadingScreen /></div>
   }
 
   const pokemon = pokemonQueries.map(q => q.data).filter(Boolean)
