@@ -12,16 +12,16 @@ const BOSS_DATA = {
   name: 'ROB HESS',
   hp: 494,
   maxHp: 494,
-  attack: 200, 
+  attack: 400, 
   sprite: hessFace, 
   types: [],
 };
 
 const LEVEL_CONFIG = {
-  1: { numWild: 2, timeLimit: 60 },  // in seconds
-  2: { numWild: 3, timeLimit: 25 },
-  3: { numWild: 4, timeLimit: 20 },
-  4: { numWild: 2, timeLimit: 35 },
+  1: { numWild: 1, timeLimit: 60 },  // in seconds
+  2: { numWild: 2, timeLimit: 30 },
+  3: { numWild: 3, timeLimit: 30 },
+  4: { numWild: 2, timeLimit: 30 },
   5: { numWild: 1, timeLimit: 120 }, 
 };
 

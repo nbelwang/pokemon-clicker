@@ -9,7 +9,7 @@ export default function HomeLayout() {
   const { playerData } = useOutletContext()
 
   return (
-    <div className="h-full px-6 py-12 md:px-12 lg:px-24 pb-24">
+    <div className="h-full px-6 py-12 md:px-12 lg:px-24 lg:py-35 pb-20">
       <h1 className="font-silkscreen font-black text-3xl mb-6 md:text-4xl lg:text-5xl text-royal-blue">
         Select Level
       </h1>
@@ -69,19 +69,19 @@ export default function HomeLayout() {
         })}
       </div>
 
-      <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-9 font-quantico text-md md:text-xl">
-        <NavLink to="/home/pokedex" className="font-silkscreen text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
-          <img src={pokeballImage} alt="Pokédex Image" className="w-7 h-7" />
+      <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-10 font-quantico text-md md:text-xl">
+        <NavLink to="/home/pokedex" className="font-silkscreen text-2xl text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
+          <img src={pokeballImage} alt="Pokédex Image" className="w-8 h-8" />
           Pokédex
         </NavLink>
         
-        <NavLink to="/home/shop" className="font-silkscreen text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
-          <img src={shopImage} alt="Shop Image" className="w-7 h-7" />
+        <NavLink to="/home/shop" className="font-silkscreen text-2xl text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
+          <img src={shopImage} alt="Shop Image" className="w-8 h-8" />
           Shop
         </NavLink>
 
-        <NavLink to="/home/stats" className="font-silkscreen text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
-          <img src={statsImage} alt="Stats Image" className="w-6 h-6" />
+        <NavLink to="/home/stats" className="font-silkscreen text-2xl text-royal-blue mb-4 bg-powder-blue border-2 border-royal-blue px-8 py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-95 w-full sm:w-auto">
+          <img src={statsImage} alt="Stats Image" className="w-7 h-7" />
           Stats
         </NavLink>
       </div>

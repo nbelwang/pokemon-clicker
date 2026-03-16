@@ -1,3 +1,4 @@
+const playerAttackVal = 0.3; //default is 0.3
 
 // processes if a wild pokemon has fainted
 export const processWildState = (state, isFinalBoss = false) => {
@@ -60,7 +61,7 @@ export const playerAttack = (state, levelNumber, clickMultiplier) => {
     const wild = [...next.wild];
     const target = { ...wild[next.activeWildIndex] };
 
-    target.hp -= 0.2 * clickMultiplier;
+    target.hp -= playerAttackVal * clickMultiplier;
     wild[next.activeWildIndex] = target;
     next.wild = wild;
 
@@ -119,7 +120,7 @@ export const wildPokemonAttack = (state, typeMap) => {
     return processCaughtState(next);
 };
 
-export const handleTimeout = (state, initialTime) => {
+export const handleTimeout = (state, initialTime, isBossLevel = false) => {
     if (!state) return { state, resetTime: initialTime };
 
     const nextWildIndex = state.activeWildIndex + 1;
@@ -128,7 +129,9 @@ export const handleTimeout = (state, initialTime) => {
     const newState = {
         ...state,
         activeWildIndex: isFinished ? state.activeWildIndex : nextWildIndex,
-        status: isFinished ? "finished" : state.status,
+        status: isFinished
+            ? (isBossLevel ? "failed" : "finished")
+            : state.status,
     };
 
     return { battleState: newState, resetTime: initialTime };

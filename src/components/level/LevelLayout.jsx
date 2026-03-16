@@ -12,6 +12,8 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [playerCaughtNewPokemon, setPlayerCaughtNewPokemon] = useState(false);
   const [showEffective, setShowEffective] = useState(false);
+  const [wildPulse, setWildPulse] = useState(false);
+  const [caughtPulse, setCaughtPulse] = useState(false);
   const clicksThisBattleRef = useRef(0);
   const isBossLevel = levelNumber === "5";
   const timePercent = (timeLeft / initialTime) * 100;
@@ -49,7 +51,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
   // watch for timeout 
   useEffect(() => {
     if (timeLeft <= 0 && battleState?.status === "fighting") {
-      const { battleState: newState, resetTime } = handleTimeout(battleState, initialTime);
+      const { battleState: newState, resetTime } = handleTimeout(battleState, initialTime, isBossLevel);
       setBattleState(newState);
       setTimeLeft(resetTime);
     }
@@ -77,12 +79,15 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
 
       if (superEffective) {
         setShowEffective(true);
-        setTimeout(() => setShowEffective(false), 1000);
+        setTimeout(() => setShowEffective(false), 400);
       }
 
       if (next.activeWildIndex !== prev.activeWildIndex || next.status === "finished") {
         setTimeLeft(initialTime);
       }
+
+      setWildPulse(true);
+      setTimeout(() => setWildPulse(false), 150);
       return next;
     });
   };
@@ -91,7 +96,11 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     setBattleState(prev => {
       if (prev.status !== "fighting") return prev;
 
-      return wildPokemonAttack(prev, typeMap);
+      const next = wildPokemonAttack(prev, typeMap);
+      
+      setCaughtPulse(true);
+      setTimeout(() => setCaughtPulse(false), 150);
+      return next;
     });
   };
 
@@ -101,7 +110,8 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
     
     const wildIntervalTime =
       levelNumber === "1" ? 3000 :
-      levelNumber === "4" ? 1500 :
+      levelNumber === "2" ? 2750 :
+      levelNumber === "4" ? 1100 :
       2000;
 
     const wildInterval = setInterval(handleWildAttack, wildIntervalTime);
@@ -171,6 +181,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           caughtPokemon={battleState.caught}
           activeCaughtIndex={battleState.activeCaughtIndex}
           setActiveCaught={(index) => setBattleState(prev => ({ ...prev, activeCaughtIndex: index }))}
+          caughtPulse={caughtPulse}
         />
       </div>
       
@@ -203,6 +214,7 @@ export default function LevelLayout({ caughtPokemon, wildPokemon, typeMap, initi
           playerCaughtNewPokemon={playerCaughtNewPokemon}
           tempXP={playerData.xp + battleState.gainedXP}
           showEffective={showEffective}
+          wildPulse={wildPulse}
         />
       </div>
     </div>

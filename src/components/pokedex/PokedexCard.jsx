@@ -27,13 +27,13 @@ export default function PokedexCard(props) {
   return (
     <>
       <div
-        className="relative bg-white border border-powder-blue rounded-xl p-4 w-full md:w-xs flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}"
+        className="relative bg-white border border-powder-blue rounded-xl p-4 w-full md:w-xs flex shadow shrink-0 cursor-pointer hover:shadow-lg"
         onClick={props.onClick}
       >
           {props.isCaught && props.id && (
             <button
               onClick={handleRemoveClick}
-              className="absolute top-3 right-4 text-salmon cursor-pointer hover:text-red-600 transition-colors z-10"
+              className="absolute top-3.5 right-3 text-powder-blue cursor-pointer hover:text-salmon transition-colors z-10"
               title="Remove from inventory"
             >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

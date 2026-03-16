@@ -9,8 +9,8 @@ export default function Shop() {
     const [loading, setLoading] = useState(false)
 
     // Modify these to adjust what multipliers and costs should be assigned to shop items
-    const multipliers = [1.5, 2, 2.5, 4, 5]
-    const costs = [50, 100, 150, 200, 300]
+    const multipliers = [1.25, 1.5, 2, 4, 5]
+    const costs = [20, 200, 300, 450, 700]
 
     useEffect(() => {
         async function fetchItemData(itemName) {
@@ -85,7 +85,7 @@ export default function Shop() {
 
     return (
         <div className="h-full px-6 py-12 md:px-12 lg:px-24 pb-24">
-            <div className="flex flex-row justify-between items-start mb-6">
+            <div className="flex flex-row justify-between items-center mb-6">
                 <h1 className="font-silkscreen font-black text-3xl mb-2 md:mb-0 md:text-4xl lg:text-5xl text-royal-blue">
                     Shop
                 </h1>
