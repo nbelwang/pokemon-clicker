@@ -1,3 +1,4 @@
+const playerAttackVal = 0.3; //default is 0.3
 
 // processes if a wild pokemon has fainted
 export const processWildState = (state, isFinalBoss = false) => {
@@ -60,7 +61,7 @@ export const playerAttack = (state, levelNumber, clickMultiplier) => {
     const wild = [...next.wild];
     const target = { ...wild[next.activeWildIndex] };
 
-    target.hp -= 0.3 * clickMultiplier;
+    target.hp -= playerAttackVal * clickMultiplier;
     wild[next.activeWildIndex] = target;
     next.wild = wild;
 
