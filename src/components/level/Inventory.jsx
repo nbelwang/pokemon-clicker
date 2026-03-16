@@ -1,6 +1,6 @@
 import InventoryCard from './InventoryCard'
 
-export default function Inventory({ caughtPokemon, activeCaughtIndex, setActiveCaught}) {
+export default function Inventory({ caughtPokemon, activeCaughtIndex, setActiveCaught, caughtPulse}) {
   const hasPokemon = caughtPokemon && caughtPokemon.length > 0;
 
   return (
@@ -22,6 +22,7 @@ export default function Inventory({ caughtPokemon, activeCaughtIndex, setActiveC
               index={index}
               activeCaughtIndex={activeCaughtIndex}
               setActiveCaught={setActiveCaught}
+              pulse={caughtPulse && index === activeCaughtIndex}
             />
           ))
         )}

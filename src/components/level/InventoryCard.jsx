@@ -1,4 +1,6 @@
-export default function InventoryCard({pokemon, index, activeCaughtIndex, setActiveCaught}) {
+import { motion } from "motion/react"
+
+export default function InventoryCard({pokemon, index, activeCaughtIndex, setActiveCaught, pulse}) {
   const hpPercent = (pokemon.hp / pokemon.maxHp) * 100
   const isActive = index === activeCaughtIndex
   const isAlive = pokemon.alive
@@ -9,38 +11,43 @@ export default function InventoryCard({pokemon, index, activeCaughtIndex, setAct
   }
 
   return (
-    <div
-      className={`border-3 rounded-lg flex p-2 gap-4 hover:shadow-lg  
-                  ${!isAlive
-                      ? "border-powder-blue bg-powder-blue cursor-not-allowed opacity-75" 
-                      : isActive
-                        ? "border-yellow border-8 bg-cream cursor-pointer"
-                        : "border-royal-blue bg-white cursor-pointer hover:bg-gray-50"
-                }`}
+    <motion.div
       onClick={handleClick}
+      animate={{ scale: pulse && isActive ? [1, 0.93, 1] : 1 }}
     >
+      <div
+        className={`border-3 rounded-lg flex p-2 gap-4 hover:shadow-lg  
+                    ${!isAlive
+                        ? "border-powder-blue bg-powder-blue cursor-not-allowed opacity-75" 
+                        : isActive
+                          ? "border-yellow border-8 bg-cream cursor-pointer"
+                          : "border-royal-blue bg-white cursor-pointer hover:bg-gray-50"
+                  }`}
+        onClick={handleClick}
+      >
 
-      <img className="h-35 w-35" src={pokemon.sprite} alt={pokemon.name} />
-      
-      <div className="flex flex-col w-full gap-2 mt-5 mr-1">
-        <p className="font-silkscreen text-xl">{pokemon.name}</p>
+        <img className="h-35 w-35" src={pokemon.sprite} alt={pokemon.name} />
+        
+        <div className="flex flex-col w-full gap-2 mt-5 mr-1">
+          <p className="font-silkscreen text-xl">{pokemon.name}</p>
 
-        <div className="flex items-end justify-between">
-          <p className="font-quantico">Type: {pokemon.types.join(", ")}</p>
-          <p className="font-quantico">{pokemon.hp} / {pokemon.maxHp}</p>
-        </div>
+          <div className="flex items-end justify-between">
+            <p className="font-quantico">Type: {pokemon.types.join(", ")}</p>
+            <p className="font-quantico">{pokemon.hp} / {pokemon.maxHp}</p>
+          </div>
 
-        <div className="flex items-center w-full p-1 h-7 bg-dark-gray rounded">
-          <p className="font-quantico font-bold text-yellow pr-1">HP </p>
-          <div className="w-full rounded bg-white">
-            <div
-            className={`rounded h-5 ${isActive? "bg-green" : "bg-light-green"}`}
-            style={{ width: `${hpPercent}%` }}
-            />
+          <div className="flex items-center w-full p-1 h-7 bg-dark-gray rounded">
+            <p className="font-quantico font-bold text-yellow pr-1">HP </p>
+            <div className="w-full rounded bg-white">
+              <div
+              className={`rounded h-5 ${isActive? "bg-green" : "bg-light-green"}`}
+              style={{ width: `${hpPercent}%` }}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-    </div>
+      </div>
+    </motion.div>
   )
 }

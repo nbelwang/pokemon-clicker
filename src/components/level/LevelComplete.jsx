@@ -1,7 +1,5 @@
 import { NavLink, useNavigate} from 'react-router-dom'
 import { useParams } from 'react-router-dom'
-import bgImage from '../../assets/background.png'
-import spaceBg from '../../assets/spaceBg.jpg'
 
 export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     const navigate = useNavigate();
@@ -37,14 +35,9 @@ export default function LevelComplete({ status, playerCaughtNewPokemon}) {
     }
 
     return(
-         <div className="relative flex flex-col flex-1 gap-3 items-center"
-            style={{
-                backgroundImage: `url(${isBossLevel ? spaceBg : bgImage})`,
-                backgroundSize: isBossLevel ? "cover" : "120%",
-                backgroundPosition: isBossLevel ? "center" : "bottom center",
-            }}>
+         <div className="relative flex flex-col flex-1 gap-3 items-center">
         
-            <div className={`flex flex-col gap-5 border-6 mt-20 lg:mt-45 p-10 w-100 border-royal-blue rounded-xl
+            <div className={`flex flex-col gap-5 border-6 mt-20 lg:mt-30 p-10 w-100 border-royal-blue rounded-xl
                             ${hasDefeatedBoss ? "bg-black" : "bg-white"}`}>
             
             <p  className={`font-quantico font-bold text-center text-xl tracking-widest 

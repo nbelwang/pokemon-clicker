@@ -27,7 +27,7 @@ export default function PokedexCard(props) {
   return (
     <>
       <div
-        className="relative bg-white border border-powder-blue rounded-xl p-4 w-full md:w-xs flex shadow shrink-0 ${props.onClick ? 'cursor-pointer hover:shadow-lg ' : ''}"
+        className="relative bg-white border border-powder-blue rounded-xl p-4 w-full md:w-xs flex shadow shrink-0 cursor-pointer hover:shadow-lg"
         onClick={props.onClick}
       >
           {props.isCaught && props.id && (
