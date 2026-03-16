@@ -39,7 +39,6 @@ export default function ItemList({ data }) {
 
             updateData(updatedPlayerData)
 
-            //item.boughtStatus = true;
         } else {
             console.log("ERROR")
         }

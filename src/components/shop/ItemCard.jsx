@@ -52,7 +52,7 @@ export default function ItemCard(props) {
                 {props.itemBought && betterMult && <p className="w-full md:w-3xs font-silkscreen text-center mt-3 text-md md:text-lg text-royal-blue">Applied</p>}
                 {sufficientXp && !props.itemBought && betterMult && (
                     <button
-                        className="w-full md:w-60 py-3 text-center bg-green mt-3 rounded-lg font-silkscreen font-bold text-white text-md md:text-lg"
+                        className="w-full md:w-60 py-3 text-center bg-green mt-3 rounded-lg font-silkscreen font-bold text-white text-md md:text-lg cursor-pointer hover:brightness-90"
                         onClick={() => props.onBuy(props.itemName)}
                     >
                         Buy
